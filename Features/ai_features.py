@@ -90,3 +90,10 @@ class Ai_Features(Voice_Configuration):
         songs = os.listdir(music_dir)
         print(songs)
         os.startfile(os.path.join(music_dir, songs[0]))
+
+    def google_search(self, query):
+        """
+        this function search the query on google.cpm
+        :return: result on google web page
+        """
+        webbrowser.open("https://www.google.com/?#q=" + query)
