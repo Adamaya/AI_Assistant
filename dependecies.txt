@@ -1,0 +1,12 @@
+pip install wikipedia
+pip install speechRecognition
+pip install pywin32
+
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio
+
+how to search a query on google
+google reminder
+search avideo on youtube
+join a meeting on google meets
+search aquerry on stack overflow
+run instance on aws via
