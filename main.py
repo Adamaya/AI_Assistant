@@ -16,7 +16,8 @@ def authentication(user_id, passwd):
     fp.close()
     for data in credential:
         if user_id in data:
-            if data.split()[1] == passwd and data.split()[0] == user_id:
+            print(data.split()[1], data.split()[0])
+            if data.split()[2] == passwd and data.split()[1] == user_id:
                 return True
             else:
                 return False
@@ -102,9 +103,12 @@ while (True):
             elif "play music" in query:
                 ai.play_music()
 
+            elif "search" in query and "google" in query:
+                ai.google_search(query)
+
     if user_option == 2:
-        print("----Configure and create your AI profile---")
-        user = input("enter your username Id: ")
+        print("-----Configure and create your AI profile-----")
+        userId = input("enter your username Id: ")
         passwd = input("enter the password: ")
         name = input("Enter your name: ")
         while (True):
@@ -118,4 +122,4 @@ while (True):
             else:
                 print("Type male or female.")
                 continue
-        create_profile(user, passwd, name, voice_code)
+        create_profile(userId, passwd, name, voice_code)
