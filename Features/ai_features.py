@@ -79,7 +79,7 @@ class Ai_Features(Voice_Configuration):
         data = query.split(" ")
         location = data[2]
         self.speak("Hold on , I will show you where " + location + " is.")
-        webbrowser.open("https://www.google.in/maps/place/" + location + "/&amp;")
+        webbrowser.open("https://www.google.nl/maps/place/" + location + "/&amp;")
 
     def play_music(self):
         """
