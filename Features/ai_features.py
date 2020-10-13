@@ -34,14 +34,13 @@ class Ai_Features(Voice_Configuration):
             r.pause_threshold = 1
             audio = r.listen(source)
         try:
-            print("Recognizing...")
             query = r.recognize_google(audio, language='en-in')
             print(f"You said: {query}\n")
 
         except Exception as e:
             print(e)
             print("Say that again please...")
-            return "None"
+            return None
         return query
 
     def wikipedia_search(self, query, sentence_count):
@@ -97,3 +96,4 @@ class Ai_Features(Voice_Configuration):
         :return: result on google web page
         """
         webbrowser.open("https://www.google.com/?#q=" + query)
+
