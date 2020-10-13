@@ -14,7 +14,7 @@ class Voice_Configuration:
         """
         voices = engine.getProperty('voices')
         engine.setProperty('voice', voices[voiceID].id)
-        engine.setProperty('rate', 120)
+        engine.setProperty('rate', 150)
         engine.setProperty('volume', 0.7)
 
     def speak(self, speach):
