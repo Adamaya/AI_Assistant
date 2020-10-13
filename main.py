@@ -1,53 +1,6 @@
-from time import sleep
 
 from Features.ai_features import Ai_Features
-
-
-def authentication(user_id, passwd):
-    """
-    it authenticate the profile of user to provide secured access to AI. If user is authorised then it will return True
-    otherwise it will return the False.
-    :param user_id: this parameter consists the userId.
-    :param passwd: this parameter consists the password.
-    :return: method returns a boolean value.
-    """
-    fp = open("database/profiles.txt", "r")
-    credential = fp.readlines()
-    fp.close()
-    for data in credential:
-        if user_id in data:
-            print(data.split()[1], data.split()[0])
-            if data.split()[2] == passwd and data.split()[1] == user_id:
-                return True
-            else:
-                return False
-        else:
-            return False
-
-
-def create_profile(user, passwd, name, v_code):
-    """
-    This method creates a user profile to access and configure the AI for specific user.
-    :param user: this parameter consist the userId.
-    :param passwd: this parameter consist the password.
-    :param name: this parameter consist the username.
-    :param v_code: this parameter consist voice code of ai.
-    :return: None
-    """
-    try:
-        print("Creating your Profile....")
-        fp = open("database/profiles.txt", "a")
-        fp.write("\n" + name + " " + user + " " + passwd)
-        fp.close()
-        print("Configuring voice setting...")
-        sleep(1)
-        fp = open("database/voice_settings.txt", "a")
-        fp.write("\n" + name + " " + str(v_code))
-        fp.close()
-        sleep(1)
-        print("profile created")
-    except Exception as e:
-        print("profile not created")
+from database.profile_manager import Profile_Manager
 
 
 def select_in_between_user_login_and_create_profile():
@@ -66,6 +19,12 @@ def select_in_between_user_login_and_create_profile():
         select_in_between_user_login_and_create_profile()
 
 
+try:
+    profile_manager = Profile_Manager()
+except Exception as e:
+    print("profile manager is not working")
+    exit()
+
 while (True):
     print("__Welcome to AI Console__ \n\nUser Login(1)\t\tCreate New Profile(2)")
     user_option = select_in_between_user_login_and_create_profile()
@@ -75,7 +34,7 @@ while (True):
             username = input('User Name Id: ')
             password = input('Password: ')
             voice_code = 0
-            verified = authentication(username, password)
+            verified = profile_manager.authentication(username, password)
             if verified:
                 # TODO create my_sql database for profile data
                 print("Welcome")
@@ -83,8 +42,7 @@ while (True):
             else:
                 print("enter the valid username password or create the profile first")
                 continue
-        ai = Ai_Features(1)
-        ai.wishMe()
+        ai = Ai_Features(0)
         while (True):
             query = ai.takeCommand().lower()
             if 'wikipedia' in query:
@@ -122,4 +80,4 @@ while (True):
             else:
                 print("Type male or female.")
                 continue
-        create_profile(userId, passwd, name, voice_code)
+        profile_manager.create_profile(userId, passwd, name, voice)
