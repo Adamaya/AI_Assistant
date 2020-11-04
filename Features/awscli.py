@@ -2,8 +2,8 @@ import subprocess, os
 
 
 def aws_authentication(access_key, secret_key, region):
-    access_key = "AKIAVTZV5EKIXFB6WG4Y"
-    secret_key = "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"
+    access_key = ""
+    secret_key = ""
     region = "ap-south-1"
 
     os.system("aws configure set aws_access_key_id " + access_key)
