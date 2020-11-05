@@ -44,7 +44,8 @@ while (True):
                 continue
         ai = Ai_Features(0)
         while (True):
-            query = ai.takeCommand().lower()
+            query = ai.takeCommand()
+            query = query.lower()
             if 'wikipedia' in query:
                 ai.wikipedia_search(query, 2)
 
