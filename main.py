@@ -42,7 +42,7 @@ while (True):
             else:
                 print("enter the valid username password or create the profile first")
                 continue
-        ai = Ai_Features
+        ai = Ai_Features()
         while (True):
             print("Here are the features of the Saha Assistent")
             print("1. create patitions")
