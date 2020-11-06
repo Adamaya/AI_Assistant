@@ -36,9 +36,21 @@ def create_volume_group(vgname, drives):
 
 def display_volume_group():
     """
-    this function display the available colume group
+    this function display the available volume group
     :return: output variable that contains exit code and output string in tuple datatype
     """
     cmd = "vgdisplay"
     output = sp.getstatusoutput(cmd)
+    return output
+
+
+def create_logical_volume(vgname, lvname, size):
+    """
+    this function creates the logical volume in volume group
+    :return: output variable that contains exit code and output string in tuple datatype
+    :param vgname: name of volume group
+    :param lvname: name of logical volume
+    """
+    cmd = "lvcreate --size +{}G --name {} {}"
+    output = sp.getstatusoutput(cmd.format(size, lvname, vgname))
     return output
