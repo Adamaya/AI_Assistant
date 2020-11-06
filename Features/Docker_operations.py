@@ -31,11 +31,7 @@ def stop_running_container(osname):
 
     cmd = 'sudo docker stop {}'.format(osname)
     out = sp.getstatusoutput(cmd)
-    if out[0] == 0:
-        print("Container named {} is now stopped.".format(osname))
-    else:
-        print("Some ERROR : {}".format(out[1]))
-
+    return out
 
 def run_prelaunched_container(osname):
     """
