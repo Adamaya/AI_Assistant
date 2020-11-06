@@ -54,3 +54,15 @@ def create_logical_volume(vgname, lvname, size):
     cmd = "lvcreate --size +{}G --name {} {}"
     output = sp.getstatusoutput(cmd.format(size, lvname, vgname))
     return output
+
+
+def mount_logical_volume(mountDirPath, lvPath):
+    """
+    this function mounts the logical volume to the newly created directory.
+    :param mountDirPath: path to mount directory
+    :param lvPath: logical volume path
+    :return: output variable that contains exit code and output string in tuple datatype
+    """
+    cmd = "mount {} {}"
+    output = sp.getstatusoutput(cmd.format(lvPath, mountDirPath))
+    return output
