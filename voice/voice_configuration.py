@@ -5,4 +5,4 @@ def speak(speach):
     this function returns the audio output of AI
     :param speach: this parameter contains the voice command of the user in text format.
     """
-    os.system('espeak-ng -s 135 -p 20 "{}"' + speach)
+    os.system('espeak-ng -s 135 -p 20 "{}"'.format(speach))
