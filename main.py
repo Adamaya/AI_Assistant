@@ -50,7 +50,9 @@ while (True):
             print("3. docker operations")
             print("4. Aws commands")
 
-            query = ai.takeCommand()
+            query = None
+            while (query == None):
+                query = ai.takeCommand()
             query = query.lower()
             if 'wikipedia' in query:
                 ai.wikipedia_search(query, 2)
@@ -82,7 +84,10 @@ while (True):
                 6. Delete all containers
                 """)
                 print()
-                command = ai.takeCommand()
+
+                command = None
+                while (command == None):
+                    command = ai.takeCommand()
                 command = command.lower()
                 if "check available images" in command:
                     status = docker.check_available_images()
