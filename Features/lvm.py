@@ -32,3 +32,13 @@ def create_volume_group(vgname, drives):
     cmd = "vgcreate {} {}"
     output = sp.getstatusoutput(cmd.format(vgname, drives))
     return output
+
+
+def display_volume_group():
+    """
+    this function display the available colume group
+    :return: output variable that contains exit code and output string in tuple datatype
+    """
+    cmd = "vgdisplay"
+    output = sp.getstatusoutput(cmd)
+    return output
