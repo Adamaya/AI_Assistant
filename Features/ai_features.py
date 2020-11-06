@@ -7,7 +7,6 @@ from voice.voice_configuration import speak
 
 
 class Ai_Features:
-
     def wishMe(self):
         """
         this method returns makes wish to user according to current time
@@ -94,4 +93,3 @@ class Ai_Features:
         :return: result on google web page
         """
         webbrowser.open("https://www.google.com/?#q=" + query)
-
