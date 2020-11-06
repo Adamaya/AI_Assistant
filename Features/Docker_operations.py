@@ -51,7 +51,6 @@ def show_currently_running_containers():
     """
         shows all the containers that are running
     """
-
     cmd = 'sudo docker ps'
     out = sp.getstatusoutput(cmd)
     return out
