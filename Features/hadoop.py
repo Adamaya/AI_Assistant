@@ -1,4 +1,5 @@
 import os
+import subprocess as sp
 
 """
 namenode configuration
@@ -18,7 +19,7 @@ def namenode_configuration(namenode_ip,namenode_directory,namenode_password,host
             f2.close()
             os.system("sudo hadoop namenode -format")
     else:
-            os.system('sshpass -p "{}" sudo ssh {} "sudo mkdir /{}"'.format(namenode_password,namenode_ip,namenode_directory))
+            os.system('sshpass -p "{}" sudo ssh root@{} "sudo mkdir /{}"'.format(namenode_password,namenode_ip,namenode_directory))
             os.system("sudo touch /root/hdfs-site.xml")
             f1=open("/root/hdfs-site.xml","w")
             f1.write('<?xml version="1.0"?>\n<?xml-stylesheet type="text/xsl" href="configuration.xsl"?> \n\n\n<!-- Put site-specific property overrides in this file. -->\n\n\n<configuration>\n\n<property>\n<name>dfs.name.dir</name>\n<value>/{}</value>\n</property>\n\n</configuration>'.format(namenode_directory))
@@ -29,7 +30,7 @@ def namenode_configuration(namenode_ip,namenode_directory,namenode_password,host
             f2.close()
             os.system('sshpass -p "{}" sudo scp hdfs-site.xml {}:/etc/hadoop'.format(namenode_password,namenode_ip))
             os.system('sshpass -p "{}" sudo scp core-site.xml {}:/etc/hadoop'.format(namenode_password,namenode_ip))
-            os.system('sshpass -p "{}" sudo ssh {} "sudo hadoop namenode -format"'.format(namenode_password,namenode_ip))
+            os.system('sshpass -p "{}" sudo ssh root@{} "sudo hadoop namenode -format"'.format(namenode_password,namenode_ip))
 
 """
 datanode configuration
@@ -51,7 +52,7 @@ def datanode_configuration(namenode_ip,datanode_ip,datanode_directory,datanode_p
                 f2.close()
 
     else:
-                os.system('sshpass -p "{}" sudo ssh {} "sudo mkdir /{}"'.format(datanode_password,datanode_ip,datanode_directory))
+                os.system('sshpass -p "{}" sudo ssh root@{} "sudo mkdir /{}"'.format(datanode_password,datanode_ip,datanode_directory))
                 os.system("sudo touch /root/hdfs-site.xml")
                 f1=open("/root/hdfs-site.xml","w")
                 f1.write('<?xml version="1.0"?>\n<?xml-stylesheet type="text/xsl" href="configuration.xsl"?> \n\n\n<!-- Put site-specific property overrides in this file. -->\n\n\n<configuration>\n\n<property>\n<name>dfs.data.dir</name>\n<value>/{}</value>\n</property>\n\n</configuration>'.format(datanode_directory))
@@ -73,19 +74,23 @@ def namenode_start(namenode_ip,namenode_password,host):
     if host==0:
 
         """ start name_node """
-        
-        os.system("sudo hadoop-daemon.sh start namenode")
+
+        output=sp.getstatusoutput("sudo hadoop-daemon.sh start namenode")
+        return output
     else:
-        os.system('sshpass -p "{}" sudo ssh {} "sudo hadoop-daemon.sh start namenode"'.format(namenode_password,namenode_ip))
+        output=sp.getstatusoutput('sshpass -p "{}" sudo ssh root@{} "sudo hadoop-daemon.sh start namenode"'.format(namenode_password,namenode_ip))
+        return output
 
 def datanode_start(datanode_ip,datanode_password,host):
     if host==0:
 
         """ start data_node"""
 
-        os.system("sudo hadoop-daemon.sh start datanode")
+        output=sp.getstatusoutput("sudo hadoop-daemon.sh start datanode")
+        return output
     else:
-        os.system('sshpass -p "{}" sudo ssh {} "sudo hadoop-daemon.sh start datanode"'.format(datanode_password,datanode_ip))
+        output=sp.getstatusoutput('sshpass -p "{}" sudo ssh root@{} "sudo hadoop-daemon.sh start datanode"'.format(datanode_password,datanode_ip))
+        return output
 """
 namenode /datanode --> stop
 if host = 0 --> local stop
@@ -97,23 +102,28 @@ def namenode_stop(namenode_ip,namenode_password,host):
 
         """ stop name_node"""
 
-        os.system("sudo hadoop-daemon.sh stop namenode")
+        output=sp.getstatusoutput("sudo hadoop-daemon.sh stop namenode")
+        return output
     else:
-        os.system('sshpass -p "{}" sudo ssh {} "sudo hadoop-daemon.sh stop namenode"'.format(namenode_password,namenode_ip))
+        output=sp.getstatusoutput('sshpass -p "{}" sudo ssh root@{} "sudo hadoop-daemon.sh stop namenode"'.format(namenode_password,namenode_ip))
+        return output
 
 def datanode_stop(datanode_ip,datanode_password,host):
     if host==0:
 
         """ stop data_node"""
 
-        os.system("sudo hadoop-daemon.sh stop datanode")
+        output=sp.getstatusoutput("sudo hadoop-daemon.sh stop datanode")
+        return output
     else:
-        os.system('sshpass -p "{}" sudo ssh {} "sudo hadoop-daemon.sh stop datanode"'.format(datanode_password,datanode_ip))
+        output=sp.getstatusoutput('sshpass -p "{}" sudo ssh root@{} "sudo hadoop-daemon.sh stop datanode"'.format(datanode_password,datanode_ip))
+        return output
 
 """
 report checking
 
 """
 def check_report(host):
-        os.system("sudo hadoop dfsadmin -report")
+        output=sp.getstatusoutput("sudo hadoop dfsadmin -report")
+        return output
    
