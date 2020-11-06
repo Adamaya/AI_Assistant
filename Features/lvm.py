@@ -55,6 +55,15 @@ def create_logical_volume(vgname, lvname, size):
     output = sp.getstatusoutput(cmd.format(size, lvname, vgname))
     return output
 
+def format_logical_volume(lvpath):
+    """
+    tis function formats the newly created logical volume
+    :param lvpath:
+    :return:
+    """
+    cmd = "mkfs.ext4 {}"
+    output = sp.getstatusoutput(cmd.format(lvpath))
+    return output
 
 def mount_logical_volume(mountDirPath, lvPath):
     """
