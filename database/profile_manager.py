@@ -1,6 +1,4 @@
 from time import sleep
-from database.database_manager import Database_Manager
-import mysql
 
 
 class Profile_Manager():
