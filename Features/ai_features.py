@@ -2,13 +2,11 @@ import wikipedia
 import webbrowser
 import os
 import datetime
-from voice.voice_configuration import Voice_Configuration
 import speech_recognition as sr
+from voice.voice_configuration import speak
 
 
-class Ai_Features(Voice_Configuration):
-    def __init__(self, voiceId):
-        self.configure_voice(voiceId)
+class Ai_Features:
 
     def wishMe(self):
         """
@@ -16,12 +14,12 @@ class Ai_Features(Voice_Configuration):
         """
         hour = int(datetime.datetime.now().hour)
         if 0 <= hour < 12:
-            self.speak("Good Morning")
+            speak("Good Morning")
         elif 12 <= hour < 18:
-            self.speak("Good Afternoon")
+            speak("Good Afternoon")
         else:
-            self.speak("Good Evening")
-        self.speak(" I am Elon. How can I help you to think over your problem.")
+            speak("Good Evening")
+        speak(" I am Elon. How can I help you to think over your problem.")
 
     def takeCommand(self):
         """
