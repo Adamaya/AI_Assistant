@@ -98,4 +98,9 @@ def extend_logical_volume(vgname, lvname, size):
     """
     cmd1 = "lvextend --size +2{}G {}/{}"
     cmd2 = "resize2fs dev/{}/{}"
-    output = sp.getstatusoutput(cmd1.format(size, lvname, vgname))
+    cmd1_output = sp.getstatusoutput(cmd1.format(size, lvname, vgname))
+    if cmd1_output[0] == 0:
+        cmd2_output = sp.getstatusoutput(cmd2.format(lvname))
+        return cmd2_output
+    else:
+        return cmd1_output
