@@ -1,6 +1,7 @@
 from Features.ai_features import Ai_Features
 from database.profile_manager import Profile_Manager
 import Features.Docker_operations as docker
+from voice.voice_configuration import speak
 
 
 def select_in_between_user_login_and_create_profile():
@@ -75,7 +76,6 @@ while (True):
 
             elif "docker" in query:
                 print("""
-                speak one of the following commands to execute the docker operations
                 1. Check available images
                 2. Launch a Container
                 3. stop a running container
@@ -83,7 +83,7 @@ while (True):
                 5. Show corrently Running Container
                 6. Delete all containers
                 """)
-                print()
+                speak("speak one of the following commands to execute the docker operations")
 
                 command = None
                 while (command == None):
@@ -97,6 +97,7 @@ while (True):
                 elif "launch a container" in command:
                     osname = input("Enter the Container name for your OS: ")
                     image_name = input("Enter the OS image you want to use: ")
+                    print("launching")
                     status = docker.launch_container(osname, image_name)
                     if status[0] == 0:
                         print("container launched successfuly")
