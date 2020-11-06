@@ -86,3 +86,16 @@ def umount_logical_volume(mountedDirPath):
     cmd = "umount {}"
     output = sp.getstatusoutput(cmd.format(mountedDirPath))
     return output
+
+
+def extend_logical_volume(vgname, lvname, size):
+    """
+    this funxtion extends the logical volume size online.
+    :param vgname: volume group name
+    :param lvname: logical volume name
+    :param size: extended volume size
+    :return: output variable that contains exit code and output string in tuple datatype
+    """
+    cmd1 = "lvextend --size +2{}G {}/{}"
+    cmd2 = "resize2fs dev/{}/{}"
+    output = sp.getstatusoutput(cmd1.format(size, lvname, vgname))
