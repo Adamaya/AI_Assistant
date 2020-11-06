@@ -2,6 +2,7 @@ from Features.ai_features import Ai_Features
 from database.profile_manager import Profile_Manager
 import Features.Docker_operations as docker
 from voice.voice_configuration import speak
+import Features.lvm as lvm
 
 
 def select_in_between_user_login_and_create_profile():
@@ -144,6 +145,124 @@ while (True):
                         print(status[1])
                     else:
                         print("failed to delete the containers")
+                        print(status[1])
+
+            elif "partition" in query:
+                print("""
+                1. Show Available Partitions
+                2. Create Physical Volume
+                3. Display Physical Volume
+                4. Create Volume Group
+                5. Display Volume Group
+                6. Create Logical Volume
+                7. Format Logical Volume
+                8. Mount the LV
+                9. Extend the LV                              
+                """)
+                speak("speak one of the following commands for partition operations")
+
+                command = None
+                while (command == None):
+                    command = ai.takeCommand()
+                command = command.lower()
+                if "available partitions" in command:
+                    status = lvm.attached_drive_report()
+                    if status[0] == 0:
+                        print("here are the available drives")
+                        print(status[1])
+                elif "create" in command and "physical" in command:
+                    drivepath = input("enter the drive path")
+                    print("creating")
+                    status = lvm.create_physical_volume(drivepath)
+                    if status[0] == 0:
+                        speak("pv created")
+                        print(status[1])
+                    else:
+                        print(status[1])
+
+                elif "physical" in command and "volume" in command and "show" in command:
+                    status = lvm.display_physical_volume()
+                    if status[0] == 0:
+                        speak("here are the list of physical volumes")
+                        print(status[1])
+                    else:
+                        speak("failed to display physical volume due to following error")
+                        print(status[1])
+
+                elif "create" in command and "volume" in command and "group" in command:
+                    vgname = input("Enter the Volume group name: ")
+                    drives = input("Enter the drive paths")
+                    status = lvm.create_volume_group(vgname, drives)
+                    speak("Creating volume group")
+                    if status[0] == 0:
+                        speak("volume group created successfully successfuly")
+                        print(status[1])
+                    else:
+                        speak("failed to create volume group due to following error")
+                        print(status[1])
+
+                elif "group" in command and "volume" in command and "show" in command:
+                    status = lvm.display_volume_group()
+                    if status[0] == 0:
+                        speak("here are the available volume groups")
+                        print(status[1])
+                    else:
+                        speak("failed to show available volume group due to following error")
+                        print(status[1])
+
+                elif "create" in command and "logical" in command and "volume" in command:
+                    vgname = input("Enter the volume group name: ")
+                    lvname = input("Enter the logical volume name: ")
+                    size = input("Enter the size in of new partition in GB: ")
+                    status = lvm.create_logical_volume(vgname, lvname, size)
+                    if status[0] == 0:
+                        speak("logical volume has been created successfully")
+                        print(status[1])
+                    else:
+                        speak("failed to create logical volume due to following reason")
+                        print(status[1])
+
+                elif "format" in command and "logical" in command and "volume" in command:
+                    lvpath = input("Enter the logical volume group name: ")
+                    status = lvm.format_logical_volume(lvpath)
+                    if status[0] == 0:
+                        speak("logical volume has been mounted successfully")
+                        print(status[1])
+                    else:
+                        speak("failed to format logical volume due to following reason")
+                        print(status[1])
+
+                elif "mount" in command and "logical" in command and "volume" in command:
+                    lvpath = input("Enter the logical volume group name: ")
+                    mountDirPath = input("Enter the path of mounted directory: ")
+                    status = lvm.mount_logical_volume(mountDirPath, lvpath)
+                    if status[0] == 0:
+                        speak("logical volume has been mounted successfully")
+                        print(status[1])
+                    else:
+                        speak("failed to mount logical volume due to following reason")
+                        print(status[1])
+
+                elif "extend" in command and "logical" in command and "volume" in command:
+                    vgname = input("Enter the volume group name: ")
+                    lvname = input("Enter the logical volume name: ")
+                    size = input("Enter the size in of new partition in GB: ")
+                    status = lvm.extend_logical_volume(vgname, lvname, size)
+                    if status[0] == 0:
+                        speak("logical volume has been extended successfully")
+                        print(status[1])
+                    else:
+                        speak("failed to extend logical volume due to following reason")
+                        print(status[1])
+
+                elif "unmount" in command and ("logical" in command or "volume" in command):
+                    mountDirPath = input("Enter the enter the path of mounted directory: ")
+                    status = lvm.umount_logical_volume(mountDirPath)
+                    if status[0] == 0:
+                        speak("logical volume has been unmounted successfully")
+                        print(status[1])
+                    else:
+                        speak("failed to unmount logical volume due to following reason")
                         print(status[1])
 
     if user_option == 2:
