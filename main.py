@@ -71,6 +71,73 @@ while (True):
             elif "search" in query and "google" in query:
                 ai.google_search(query)
 
+            elif "docker" in query:
+                print("""
+                speak one of the following commands to execute the docker operations
+                1. Check available images
+                2. Launch a Container
+                3. stop a running container
+                4. Relaunch a Stopped container
+                5. Show corrently Running Container
+                6. Delete all containers
+                """)
+                print()
+                command = ai.takeCommand()
+                command = command.lower()
+                if "check available images" in command:
+                    status = docker.check_available_images()
+                    if status[0] == 0:
+                        print("here are the available images")
+                        print(status[1])
+                elif "launch a container" in command:
+                    osname = input("Enter the Container name for your OS: ")
+                    image_name = input("Enter the OS image you want to use: ")
+                    status = docker.launch_container(osname, image_name)
+                    if status[0] == 0:
+                        print("container launched successfuly")
+                        print(status[1])
+                    else:
+                        print("failed to launch the container")
+                        print(status[1])
+
+                elif "stop a running container" in command:
+                    osname = input("Enter the Container name for your OS: ")
+                    status = docker.stop_running_container(osname)
+                    if status[0] == 0:
+                        print("container has been stopped successfuly")
+                        print(status[1])
+                    else:
+                        print("failed to stop the container")
+                        print(status[1])
+
+                elif "relaunch a stopped container" in command:
+                    osname = input("Enter the Container name for your OS: ")
+                    status = docker.run_prelaunched_container(osname)
+                    if status[0] == 0:
+                        print("container has been relaunched successfuly")
+                        print(status[1])
+                    else:
+                        print("failed to relaunch the container")
+                        print(status[1])
+
+                elif "show currently running container" in command:
+                    status = docker.show_currently_running_containers()
+                    if status[0] == 0:
+                        print("here are the running containers")
+                        print(status[1])
+                    else:
+                        print("docker internal error occered")
+                        print(status[1])
+
+                elif "delete all containers" in command:
+                    status = docker.delete_all_containers()
+                    if status[0] == 0:
+                        print("all containers has been deleted successfuly")
+                        print(status[1])
+                    else:
+                        print("failed to delete the containers")
+                        print(status[1])
+
     if user_option == 2:
         print("-----Configure and create your AI profile-----")
         userId = input("enter your username Id: ")
