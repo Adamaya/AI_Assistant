@@ -109,6 +109,7 @@ while (True):
                 elif "stop a running container" in command:
                     osname = input("Enter the Container name for your OS: ")
                     status = docker.stop_running_container(osname)
+                    print("Stopping the container")
                     if status[0] == 0:
                         print("container has been stopped successfuly")
                         print(status[1])
@@ -119,6 +120,7 @@ while (True):
                 elif "relaunch a stopped container" in command:
                     osname = input("Enter the Container name for your OS: ")
                     status = docker.run_prelaunched_container(osname)
+                    print("Relaunching....")
                     if status[0] == 0:
                         print("container has been relaunched successfuly")
                         print(status[1])
