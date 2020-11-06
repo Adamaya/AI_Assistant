@@ -47,12 +47,12 @@ class Ai_Features:
         :param sentence_count: set the value of readable sentences.
         :return: it prints the result of query and reads it.
         """
-        self.speak('searching wikipedia...')
+        speak('searching wikipedia...')
         query = query.replace("wikipedia", "")
         results = wikipedia.summary(query, sentences=sentence_count)
-        self.speak("According to Wikipedia")
+        speak("According to Wikipedia")
         print(results)
-        self.speak(results)
+        speak(results)
 
     def open_website(selfself, query):
         """
@@ -74,7 +74,7 @@ class Ai_Features:
         """
         data = query.split(" ")
         location = data[2]
-        self.speak("Hold on , I will show you where " + location + " is.")
+        speak("Hold on , I will show you where " + location + " is.")
         webbrowser.open("https://www.google.nl/maps/place/" + location + "/&amp;")
 
     def play_music(self):
