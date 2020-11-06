@@ -1,6 +1,6 @@
-
 from Features.ai_features import Ai_Features
 from database.profile_manager import Profile_Manager
+import Features.Docker_operations as docker
 
 
 def select_in_between_user_login_and_create_profile():
@@ -44,6 +44,12 @@ while (True):
                 continue
         ai = Ai_Features(0)
         while (True):
+            print("Here are the features of the Saha Assistent")
+            print("1. create patitions")
+            print("2. configure hadoop cluster")
+            print("3. docker operations")
+            print("4. Aws commands")
+
             query = ai.takeCommand()
             query = query.lower()
             if 'wikipedia' in query:
