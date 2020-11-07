@@ -27,9 +27,9 @@ def namenode_configuration(namenode_ip, namenode_directory, namenode_password, h
             '<?xml version="1.0"?>\n<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>\n\n\n<!-- Put site-specific property overrides in this file. -->\n\n<configuration>\n\n<property>\n<name>fs.default.name</name>\n<value>hdfs://{}:9001</value>\n</property>\n\n</configuration>'.format(
                 namenode_ip))
         f2.close()
-        os.system("sudo echo 'Y' | hadoop namenode -format")
+        os.system("sudo hadoop namenode -format -y")
     else:
-        os.system('sshpass -p "{}" sudo ssh root@{} "sudo mkdir /{}"'.format(namenode_password, namenode_ip,
+        os.system('sshpass -p "{}" sudo ssh root@{} "sudo mkdir /root/{}"'.format(namenode_password, namenode_ip,
                                                                              namenode_directory))
         os.system("sudo touch /root/hdfs-site.xml")
         f1 = open("/root/hdfs-site.xml", "w")
@@ -46,7 +46,7 @@ def namenode_configuration(namenode_ip, namenode_directory, namenode_password, h
         os.system('sshpass -p "{}" sudo scp hdfs-site.xml {}:/etc/hadoop'.format(namenode_password, namenode_ip))
         os.system('sshpass -p "{}" sudo scp core-site.xml {}:/etc/hadoop'.format(namenode_password, namenode_ip))
         os.system(
-            "sshpass -p '{}' sudo ssh root@{} sudo echo 'Y' | hadoop namenode -format".format(namenode_password, namenode_ip))
+            "sshpass -p '{}' sudo ssh root@{} sudo hadoop namenode -format -y".format(namenode_password, namenode_ip))
 
 
 def datanode_configuration(namenode_ip, datanode_ip, datanode_directory, datanode_password, host):
