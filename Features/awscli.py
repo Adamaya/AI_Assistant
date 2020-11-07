@@ -22,8 +22,8 @@ def launch_ec2_instance(ami_id, key_name, security_grp, instance_type):
     return output
 
 
-def create_security_group(group_name, description, vpc_id):
-    output = subprocess.getstatusoutput('aws ec2 create-security-group --group-name "{0}" --description "{1}" --vpc-id {2}'.format(group_name,description,vpc_id))
+def create_security_group(group_name, description):
+    output = subprocess.getstatusoutput('aws ec2 create-security-group --group-name "{0}" --description "{1}" '.format(group_name,description))
     return output
 
 
