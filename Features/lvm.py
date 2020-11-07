@@ -22,6 +22,16 @@ def create_physical_volume(drive):
     return output
 
 
+def display_volume_group():
+    """
+    this function display the available physical volume
+    :return: output variable that contains exit code and output string in tuple datatype
+    """
+    cmd = "vgdisplay"
+    output = sp.getstatusoutput(cmd)
+    return output
+
+
 def create_volume_group(vgname, drives):
     """
     this function creates the volume group for creating logical volume
@@ -34,12 +44,12 @@ def create_volume_group(vgname, drives):
     return output
 
 
-def display_volume_group():
+def display_physical_volume():
     """
     this function display the available volume group
     :return: output variable that contains exit code and output string in tuple datatype
     """
-    cmd = "vgdisplay"
+    cmd = "pvdisplay"
     output = sp.getstatusoutput(cmd)
     return output
 
