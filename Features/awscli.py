@@ -18,18 +18,17 @@ def create_key_pair(key_name):
 
 
 def launch_ec2_instance():
-    output = subprocess.getstatusoutput(
-        "aws ec2 run-instances --image-id ami-0e306788ff2473ccb --key-name myclikey --security-groups cliInstanceSecurityGroup --instance-type t2.micro"
-    )
+    output = subprocess.getstatusoutput("aws ec2 run-instances --image-id ami-0e306788ff2473ccb --key-name myclikey --security-groups cliInstanceSecurityGroup --instance-type t2.micro")
     return output
 
 
 def create_security_group():
-    output = subprocess.getstatusoutput(
-        'aws ec2 create-security-group --group-name "cliInstanceSecurityGroup" --description "this is the security group created for the new instance" --vpc-id vpc-3fe8f557'
-    )
+    output = subprocess.getstatusoutput('aws ec2 create-security-group --group-name "cliInstanceSecurityGroup" --description "this is the security group created for the new instance" --vpc-id vpc-3fe8f557')
     return output
 
 
-def create_volume():
-    output = subprocess.getstatusoutput()
+def create_volume(AZ, size, vol_type):
+    output = subprocess.getstatusoutput("aws ec2 create-volume --availability-zone {0} --size {1} --volume-type {2}".format(AZ,size,vol_type))
+    return output
+
+
