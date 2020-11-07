@@ -88,7 +88,7 @@ while (True):
                 speak("speak one of the following commands to execute the docker operations")
 
                 command = None
-                while (command == None):
+                while command == None:
                     command = ai.takeCommand()
                 command = command.lower()
                 if "check available images" in command:
@@ -163,7 +163,7 @@ while (True):
                 speak("speak one of the following commands for partition operations")
 
                 command = None
-                while (command == None):
+                while command == None:
                     command = ai.takeCommand()
                 command = command.lower()
                 if "available partitions" in command:
@@ -279,7 +279,7 @@ while (True):
                 speak("speak one of the following commands to execute the hadoop operations")
 
                 command = None
-                while (command == None):
+                while command == None:
                     command = ai.takeCommand()
                 command = command.lower()
                 if "configure" in command and "name node" in command:
