@@ -32,3 +32,11 @@ def create_volume(AZ, size, vol_type):
     return output
 
 
+def attach_volume(instance_id, volume_id):
+    output = subprocess.getstatusoutput("aws ec2 attach-volume --instance-id {0} --volume-id {1} --device /dev/sdh".format(instance_id,volume_id))
+    return output
+
+
+def s3_addition(bucket_name, region):
+    output = subprocess.getstatusoutput("aws s3api create-bucket --bucket {0} --region {1} --create-bucket-configuration LocationConstraint={1}".format(bucket_name,region))
+    return output
