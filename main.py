@@ -282,13 +282,13 @@ while (True):
                 while command == None:
                     command = ai.takeCommand()
                 command = command.lower()
-                if "configure" in command and "name node" in command:
+                if "configure" in command and ("name node" in command or "namenode" in command):
                     host = int(input('localhost(0)  remote(1): '))
                     namenode_ip = input("enter the name node ip: ")
                     namenode_dir_name = input("enter the name node directory name:")
                     namenode_password = input("enter the name node password: ")
                     status = hadoop.namenode_configuration(namenode_ip, namenode_password, namenode_dir_name,
-                                                           namenode_password)
+                                                           namenode_password, host)
                     speak("Configuring...")
                     if status[0] == 0:
                         speak("configured data node successfully")
