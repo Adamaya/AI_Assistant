@@ -91,12 +91,12 @@ while (True):
                 while command == None:
                     command = ai.takeCommand()
                 command = command.lower()
-                if "check available images" in command:
+                if "check" in command and "available" in command and "images" in command:
                     status = docker.check_available_images()
                     if status[0] == 0:
-                        print("here are the available images")
+                        speak("here are the available images")
                         print(status[1])
-                elif "launch a container" in command:
+                elif "launch" in command and "container" in command:
                     osname = input("Enter the Container name for your OS: ")
                     image_name = input("Enter the OS image you want to use: ")
                     print("launching")
@@ -108,7 +108,7 @@ while (True):
                         print("failed to launch the container")
                         print(status[1])
 
-                elif "stop a running container" in command:
+                elif "stop" in command and "running" in command and "container" in command:
                     osname = input("Enter the Container name for your OS: ")
                     status = docker.stop_running_container(osname)
                     print("Stopping the container")
@@ -119,7 +119,7 @@ while (True):
                         print("failed to stop the container")
                         print(status[1])
 
-                elif "relaunch a stopped container" in command:
+                elif "relaunch" in command and "stopped" in command and "container" in command:
                     osname = input("Enter the Container name for your OS: ")
                     status = docker.run_prelaunched_container(osname)
                     print("Relaunching....")
@@ -130,7 +130,7 @@ while (True):
                         print("failed to relaunch the container")
                         print(status[1])
 
-                elif "show currently running container" in command:
+                elif "show" in command and "running" in command and "container" in command:
                     status = docker.show_currently_running_containers()
                     if status[0] == 0:
                         print("here are the running containers")
@@ -139,7 +139,8 @@ while (True):
                         print("docker internal error occered")
                         print(status[1])
 
-                elif "delete all containers" in command:
+                # TODO notworking correctly with voice
+                elif "delete" in command and "all" in command and "container" in command:
                     status = docker.delete_all_containers()
                     if status[0] == 0:
                         print("all containers has been deleted successfuly")
@@ -288,7 +289,7 @@ while (True):
                     namenode_dir_name = input("enter the name node directory name:")
                     namenode_password = input("enter the name node password: ")
                     status = hadoop.namenode_configuration(namenode_ip, namenode_password, namenode_dir_name,
-                                                           namenode_password, host)
+                                                           namenode_password,host)
                     speak("Configuring...")
                     if status[0] == 0:
                         speak("configured data node successfully")
