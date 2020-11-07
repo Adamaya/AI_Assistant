@@ -1,6 +1,7 @@
 pip3 install SpeechRecognition wikipedia
 yum install gcc portaudio portaudio-devel python3-devvel PyAudio
 sudo dnf install redhat-rpm-config
+sudo yum install git
 sudo yum install sshpass
 sudo yum install hadoop
 sudo yum install jdk
