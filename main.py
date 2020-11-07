@@ -3,6 +3,7 @@ from database.profile_manager import Profile_Manager
 import Features.Docker_operations as docker
 from voice.voice_configuration import speak
 import Features.lvm as lvm
+import Features.hadoop as hadoop
 
 
 def select_in_between_user_login_and_create_profile():
@@ -87,15 +88,15 @@ while (True):
                 speak("speak one of the following commands to execute the docker operations")
 
                 command = None
-                while (command == None):
+                while command == None:
                     command = ai.takeCommand()
                 command = command.lower()
-                if "check available images" in command:
+                if "check" in command and "available" in command and "images" in command:
                     status = docker.check_available_images()
                     if status[0] == 0:
-                        print("here are the available images")
+                        speak("here are the available images")
                         print(status[1])
-                elif "launch a container" in command:
+                elif "launch" in command and "container" in command:
                     osname = input("Enter the Container name for your OS: ")
                     image_name = input("Enter the OS image you want to use: ")
                     print("launching")
@@ -107,7 +108,7 @@ while (True):
                         print("failed to launch the container")
                         print(status[1])
 
-                elif "stop a running container" in command:
+                elif "stop" in command and "running" in command and "container" in command:
                     osname = input("Enter the Container name for your OS: ")
                     status = docker.stop_running_container(osname)
                     print("Stopping the container")
@@ -118,7 +119,7 @@ while (True):
                         print("failed to stop the container")
                         print(status[1])
 
-                elif "relaunch a stopped container" in command:
+                elif "relaunch" in command and "stopped" in command and "container" in command:
                     osname = input("Enter the Container name for your OS: ")
                     status = docker.run_prelaunched_container(osname)
                     print("Relaunching....")
@@ -129,7 +130,7 @@ while (True):
                         print("failed to relaunch the container")
                         print(status[1])
 
-                elif "show currently running container" in command:
+                elif "show" in command and "running" in command and "container" in command:
                     status = docker.show_currently_running_containers()
                     if status[0] == 0:
                         print("here are the running containers")
@@ -138,7 +139,8 @@ while (True):
                         print("docker internal error occered")
                         print(status[1])
 
-                elif "delete all containers" in command:
+                # TODO notworking correctly with voice
+                elif "delete" in command and "all" in command and "container" in command:
                     status = docker.delete_all_containers()
                     if status[0] == 0:
                         print("all containers has been deleted successfuly")
@@ -162,7 +164,7 @@ while (True):
                 speak("speak one of the following commands for partition operations")
 
                 command = None
-                while (command == None):
+                while command == None:
                     command = ai.takeCommand()
                 command = command.lower()
                 if "available partitions" in command:
@@ -263,6 +265,113 @@ while (True):
                         print(status[1])
                     else:
                         speak("failed to unmount logical volume due to following reason")
+                        print(status[1])
+
+            elif "hadoop" in query:
+                print("""
+                1. Configure Namenode
+                2. Configure Datanode
+                3. Start Namenode
+                4. Stop Namenode
+                5. Start Datanode
+                6. Stop Datanode
+                7. Cluster Report
+                """)
+                speak("speak one of the following commands to execute the hadoop operations")
+
+                command = None
+                while command == None:
+                    command = ai.takeCommand()
+                command = command.lower()
+                if "configure" in command and ("name node" in command or "namenode" in command):
+                    host = int(input('localhost(0)  remote(1): '))
+                    namenode_ip = input("enter the name node ip: ")
+                    namenode_dir_name = input("enter the name node directory name:")
+                    namenode_password = input("enter the name node password: ")
+                    status = hadoop.namenode_configuration(namenode_ip, namenode_password, namenode_dir_name,
+                                                           host)
+                    speak("Configuring...")
+                    if status[0] == 0:
+                        speak("configured data node successfully")
+                        print(status[1])
+                    else:
+                        speak("failed to configure name node due to following reason.")
+
+                elif "configure" in command and "data node" in command:
+                    host = int(input('localhost(0)  remote(1): '))
+                    namenode_ip = input("enter the name node ip: ")
+                    datanode_ip = input("enter the data node ip: ")
+                    datanode_dir_name = input("enter the data node directory name: ")
+                    datanode_password = input("enter the data node password: ")
+                    status = hadoop.datanode_configuration(namenode_ip, datanode_ip, datanode_dir_name,
+                                                           datanode_password, host)
+                    speak("Configuring...")
+                    if status[0] == 0:
+                        speak("configured data node successfully")
+                        print(status[1])
+                    else:
+                        speak("failed to configure data node due to following reason.")
+                        print(status[1])
+
+                elif "start" in command and "name node" in command:
+                    host = int(input('localhost(0)  remote(1): '))
+                    namenode_ip = input("enter the name node ip: ")
+                    namenode_password = input("enter the name node ip password: ")
+                    status = hadoop.namenode_start(namenode_ip, namenode_password, host)
+                    speak("Starting name node")
+                    if status[0] == 0:
+                        speak("name node has been started successfully")
+                        print(status[1])
+                    else:
+                        speak("failed to start the name node due to following reason.")
+                        print(status[1])
+
+                elif "stop" in command and "name node" in command:
+                    host = int(input('localhost(0)  remote(1): '))
+                    namenode_ip = input("enter the name node ip: ")
+                    namenode_password = input("enter the name node ip password: ")
+                    status = hadoop.namenode_stop(namenode_ip, namenode_password, host)
+                    speak("stopping name node")
+                    if status[0] == 0:
+                        speak("name node has been stopped successfully")
+                        print(status[1])
+                    else:
+                        speak("failed to stop name node due to following reason.")
+                        print(status[1])
+
+                elif "start" in command and "data node" in command:
+                    host = int(input('localhost(0)  remote(1): '))
+                    datanode_ip = input("enter the data node ip: ")
+                    datanode_password = input("enter the data node ip password: ")
+                    status = hadoop.datanode_start(datanode_ip, datanode_password, host)
+                    speak("Starting data node")
+                    if status[0] == 0:
+                        speak("data node has been started successfully")
+                        print(status[1])
+                    else:
+                        speak("failed to start the data node due to following reason.")
+                        print(status[1])
+
+                elif "stop" in command and "data node" in command:
+                    host = int(input('localhost(0)  remote(1): '))
+                    datanode_ip = input("enter the data node ip: ")
+                    datanode_password = input("enter the data node ip password: ")
+                    status = hadoop.namenode_stop(datanode_ip, datanode_password, host)
+                    speak("stopping data node")
+                    if status[0] == 0:
+                        speak("data node has been stopped successfully")
+                        print(status[1])
+                    else:
+                        speak("failed to stop data node due to following reason.")
+                        print(status[1])
+
+                elif "cluster" in command and "report" in command:
+                    status = hadoop.check_report()
+                    speak("displaying cluster report")
+                    if status[0] == 0:
+                        print(status[1])
+                    else:
+                        speak("failed to display cluster report due to following reason.")
                         print(status[1])
 
     if user_option == 2:
