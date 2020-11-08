@@ -43,8 +43,8 @@ def namenode_configuration(namenode_ip, namenode_directory, namenode_password, h
             '<?xml version="1.0"?>\n<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>\n\n\n<!-- Put site-specific property overrides in this file. -->\n\n<configuration>\n\n<property>\n<name>fs.default.name</name>\n<value>hdfs://{}:9001</value>\n</property>\n\n</configuration>'.format(
                 namenode_ip))
         f2.close()
-        os.system('sshpass -p "{}" sudo scp hdfs-site.xml {}:/etc/hadoop'.format(namenode_password, namenode_ip))
-        os.system('sshpass -p "{}" sudo scp core-site.xml {}:/etc/hadoop'.format(namenode_password, namenode_ip))
+        os.system('sshpass -p "{}" sudo scp /root/hdfs-site.xml {}:/etc/hadoop'.format(namenode_password, namenode_ip))
+        os.system('sshpass -p "{}" sudo scp /root/core-site.xml {}:/etc/hadoop'.format(namenode_password, namenode_ip))
         os.system(
             "sshpass -p '{}' sudo ssh root@{} sudo hadoop namenode -format -y".format(namenode_password, namenode_ip))
 
