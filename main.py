@@ -293,7 +293,7 @@ while (True):
                     namenode_ip = input("enter the name node ip: ")
                     namenode_dir_name = input("enter the name node directory name:")
                     namenode_password = input("enter the name node password: ")
-                    status = hadoop.namenode_configuration(namenode_ip, namenode_dir_name, namenode_password
+                    status = hadoop.namenode_configuration(namenode_ip, namenode_dir_name, namenode_password,
                                                            host)
                     speak("Configuring...")
                     speak("configured data node successfully")
