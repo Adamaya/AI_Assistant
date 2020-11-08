@@ -9,9 +9,9 @@ def aws_authentication(access_key, secret_key, region):
     secret_key = ""
     region = "ap-south-1"
 
-    out1 = os.system("aws configure set aws_access_key_id {}".format(access_key))
-    out2 = os.system("aws configure set aws_secret_access_key {}".format(secret_key))
-    out3 = os.system("aws configure set default.region {}".format(region))
+    out1 = subprocess.getstatusoutput("aws configure set aws_access_key_id {}".format(access_key))
+    out2 = subprocess.getstatusoutput("aws configure set aws_secret_access_key {}".format(secret_key))
+    out3 = subprocess.getstatusoutput("aws configure set default.region {}".format(region))
     if out1[0] == 0 and out2[0] == 0 and out3[0] == 0:
         return 0
     else:
