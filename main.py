@@ -284,97 +284,93 @@ while (True):
                 """)
                 speak("speak one of the following commands to execute the hadoop operations")
 
-                command = None
-                while command == None:
-                    command = ai.takeCommand()
-                command = command.lower()
-                if "configure" in command and ("name node" in command or "namenode" in command):
-                    host = int(input('localhost(0)  remote(1): '))
-                    namenode_ip = input("enter the name node ip: ")
-                    namenode_dir_name = input("enter the name node directory name:")
-                    namenode_password = input("enter the name node password: ")
-                    status = hadoop.namenode_configuration(namenode_ip, namenode_dir_name, namenode_password,
+                while(True):
+                    command = None
+                    while command == None:
+                        command = ai.takeCommand()
+                    command = command.lower()
+                    if "configure" in command and ("name node" in command or "namenode" in command):
+                        host = int(input('localhost(0)  remote(1): '))
+                        namenode_ip = input("enter the name node ip: ")
+                        namenode_dir_name = input("enter the name node directory name:")
+                        namenode_password = input("enter the name node password: ")
+                        status = hadoop.namenode_configuration(namenode_ip, namenode_dir_name, namenode_password,
                                                            host)
-                    speak("Configuring...")
-                    speak("configured data node successfully")
-
-
-                elif "configure" in command and "data node" in command:
-                    host = int(input('localhost(0)  remote(1): '))
-                    namenode_ip = input("enter the name node ip: ")
-                    datanode_ip = input("enter the data node ip: ")
-                    datanode_dir_name = input("enter the data node directory name: ")
-                    datanode_password = input("enter the data node password: ")
-                    status = hadoop.datanode_configuration(namenode_ip, datanode_ip, datanode_dir_name,
-                                                           datanode_password, host)
-                    speak("Configuring...")
-                    if status[0] == 0:
+                        speak("Configuring...")
                         speak("configured data node successfully")
-                        print(status[1])
-                    else:
-                        speak("failed to configure data node due to following reason.")
-                        print(status[1])
 
-                elif "start" in command and "name node" in command:
-                    host = int(input('localhost(0)  remote(1): '))
-                    namenode_ip = input("enter the name node ip: ")
-                    namenode_password = input("enter the name node ip password: ")
-                    status = hadoop.namenode_start(namenode_ip, namenode_password, host)
-                    speak("Starting name node")
-                    if status[0] == 0:
+
+                    elif "configure" in command and "data node" in command:
+                        host = int(input('localhost(0)  remote(1): '))
+                        namenode_ip = input("enter the name node ip: ")
+                        datanode_ip = input("enter the data node ip: ")
+                        datanode_dir_name = input("enter the data node directory name: ")
+                        datanode_password = input("enter the data node password: ")
+                        status = hadoop.datanode_configuration(namenode_ip, datanode_ip, datanode_dir_name,
+                                                           datanode_password, host)
+                        speak("Configuring...")
+                        if status[0] == 0:
+                            speak("configured data node successfully")
+                            print(status[1])
+                        else:
+                            speak("failed to configure data node due to following reason.")
+                            print(status[1])
+
+                    elif "start" in command and "name node" in command:
+                        host = int(input('localhost(0)  remote(1): '))
+                        namenode_ip = input("enter the name node ip: ")
+                        namenode_password = input("enter the name node ip password: ")
+                        status = hadoop.namenode_start(namenode_ip, namenode_password, host)
+                        speak("Starting name node")
                         speak("name node has been started successfully")
-                        print(status[1])
-                    else:
-                        speak("failed to start the name node due to following reason.")
-                        print(status[1])
 
-                elif "stop" in command and "name node" in command:
-                    host = int(input('localhost(0)  remote(1): '))
-                    namenode_ip = input("enter the name node ip: ")
-                    namenode_password = input("enter the name node ip password: ")
-                    status = hadoop.namenode_stop(namenode_ip, namenode_password, host)
-                    speak("stopping name node")
-                    if status[0] == 0:
-                        speak("name node has been stopped successfully")
-                        print(status[1])
-                    else:
-                        speak("failed to stop name node due to following reason.")
-                        print(status[1])
 
-                elif "start" in command and "data node" in command:
-                    host = int(input('localhost(0)  remote(1): '))
-                    datanode_ip = input("enter the data node ip: ")
-                    datanode_password = input("enter the data node ip password: ")
-                    status = hadoop.datanode_start(datanode_ip, datanode_password, host)
-                    speak("Starting data node")
-                    if status[0] == 0:
-                        speak("data node has been started successfully")
-                        print(status[1])
-                    else:
-                        speak("failed to start the data node due to following reason.")
-                        print(status[1])
+                    elif "stop" in command and "name" in command and "node" in command:
+                        host = int(input('localhost(0)  remote(1): '))
+                        namenode_ip = input("enter the name node ip: ")
+                        namenode_password = input("enter the name node ip password: ")
+                        status = hadoop.namenode_stop(namenode_ip, namenode_password, host)
+                        speak("stopping name node")
+                        if status[0] == 0:
+                            speak("name node has been stopped successfully")
+                            print(status[1])
+                        else:
+                            speak("failed to stop name node due to following reason.")
+                            print(status[1])
 
-                elif "stop" in command and "data node" in command:
-                    host = int(input('localhost(0)  remote(1): '))
-                    datanode_ip = input("enter the data node ip: ")
-                    datanode_password = input("enter the data node ip password: ")
-                    status = hadoop.namenode_stop(datanode_ip, datanode_password, host)
-                    speak("stopping data node")
-                    if status[0] == 0:
-                        speak("data node has been stopped successfully")
-                        print(status[1])
-                    else:
-                        speak("failed to stop data node due to following reason.")
-                        print(status[1])
+                    elif "start" in command and "data" in command and "node" in command:
+                        host = int(input('localhost(0)  remote(1): '))
+                        datanode_ip = input("enter the data node ip: ")
+                        datanode_password = input("enter the data node ip password: ")
+                        status = hadoop.datanode_start(datanode_ip, datanode_password, host)
+                        speak("Starting data node")
+                        if status[0] == 0:
+                            speak("data node has been started successfully")
+                        else:
+                            speak("failed to start the data node due to following reason.")
 
-                elif "cluster" in command and "report" in command:
-                    status = hadoop.check_report()
-                    speak("displaying cluster report")
-                    if status[0] == 0:
-                        print(status[1])
-                    else:
-                        speak("failed to display cluster report due to following reason.")
-                        print(status[1])
+
+                    elif "stop" in command and "data" in command and "node" in command:
+                        host = int(input('localhost(0)  remote(1): '))
+                        datanode_ip = input("enter the data node ip: ")
+                        datanode_password = input("enter the data node ip password: ")
+                        status = hadoop.namenode_stop(datanode_ip, datanode_password, host)
+                        speak("stopping data node")
+                        if status[0] == 0:
+                            speak("data node has been stopped successfully")
+                            print(status[1])
+                        else:
+                            speak("failed to stop data node due to following reason.")
+                            print(status[1])
+
+                    elif "cluster" in command and "report" in command:
+                        status = hadoop.check_report()
+                        speak("displaying cluster report")
+                        if status[0] == 0:
+                            print(status[1])
+                        else:
+                            speak("failed to display cluster report due to following reason.")
+
 
             elif "amazon" in query and "web" in query and "service" in query:
                 print("""
