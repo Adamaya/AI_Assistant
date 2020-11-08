@@ -4,6 +4,7 @@ import Features.Docker_operations as docker
 from voice.voice_configuration import speak
 import Features.lvm as lvm
 import Features.hadoop as hadoop
+import Features.awscli as aws
 
 
 def select_in_between_user_login_and_create_profile():
@@ -373,6 +374,100 @@ while (True):
                     else:
                         speak("failed to display cluster report due to following reason.")
                         print(status[1])
+            
+            elif "aws" in query:
+                print("""
+                1. AWS Authentication
+                2. Create Key Pair
+                3. Launch EC2 Instance
+                4. Create Security Group
+                5. Create Volume
+                6. Attach Volume
+                7. Add S3 
+                """)
+                speak("speak one of the following commands to execute the hadoop operations")
+
+                command = None
+                while command == None:
+                    command = ai.takeCommand()
+                command = command.lower()
+
+                if "authentication" in command:
+                    access_key = input("Enter access key : ")
+                    secret_key = input("Enter secret key : ")
+                    region = input("Enter region : ")
+                    status = aws.aws_authentication(access_key,secret_key,region)
+                    if status[0][0] == 0 and status[1][0] == 0 and status[2][0] == 0:
+                        speak("Authentication successful")
+                        print(status[1])
+                    else:
+                        speak("authentication failed")
+                        print(status[1])
+
+                elif "key" in command:
+                    key_name = input("Enter a key name : ")
+                    status = aws.create_key_pair(key_name)
+                    if status[0] == 0:
+                        speak("Key Pair Created")
+                        print(status[1])
+                    else:
+                        speak("Failed to create a Key Pair")
+                        print(status[1])
+                
+                elif "launch" in command and "instance" in command:
+                    key_name = input("Enter the key name to use : ")
+                    security_grp_name = input("Enter the Security Group name to use : ")
+                    status = aws.launch_ec2_instance("ami-0e306788ff2473ccb",key_name,security_grp_name,"t2.micro")
+                    if status[0] == 0:
+                        speak("The EC2 instance has been launched successfully")
+                        print(status[1])
+                    else:
+                        speak("Failed to launch the ec2 instance")
+                        print(status[1]) 
+                
+                elif "security" in command and "group" in command:
+                    security_grp_name = input("Enter a Security Group name : ")
+                    description = input("Put a description for the Security Group : ")
+                    status = aws.create_security_group(security_grp_name,description)
+                    if status[0] == 0:
+                        speak("The Security Group has been created successfully")
+                        print(status[1])
+                    else:
+                        speak("Failed to create The Security Group")
+                        print(status[1]) 
+
+                elif "create" in command and "volume" in command:
+                    AZ = input("Enter the Availability Zone : ")
+                    size = input("Enter the size of the volume : ")
+                    status = aws.create_volume(AZ,size,"gp2")
+                    if status[0] == 0:
+                        speak("The volume has been created successfully")
+                        print(status[1])
+                    else:
+                        speak("Failed to create volume")
+                        print(status[1]) 
+                
+                elif "attach" in command and "volume" in command:
+                    instance_id = input("Enter the instance id to attach with : ")
+                    volume_id = input("Enter the volume id : ")
+                    status = aws.attach_volume(instance_id,volume_id)
+                    if status[0] == 0:
+                        speak("The volume has been attached successfully to the instance")
+                        print(status[1])
+                    else:
+                        speak("Failed to attach volume")
+                        print(status[1]) 
+                
+                elif "add" in command or "s3" in command:
+                    bucket_name = input("Enter a bucket name : ")
+                    region = input("Enter the region : ")
+                    status = aws.s3_addition(bucket_name,region)
+                    if status[0] == 0:
+                        speak("The s3 has been added successfully")
+                        print(status[1])
+                    else:
+                        speak("Failed to add s3")
+                        print(status[1]) 
 
     if user_option == 2:
         print("-----Configure and create your AI profile-----")
