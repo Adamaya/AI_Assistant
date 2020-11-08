@@ -1,9 +1,10 @@
 import joblib
-model=joblib.load("salary_model.pk1")
 
-exp = input("Enter year Exp : ")
-pred = model.predict([[float(exp)]] )
+def sal_est(exp):
 
-print( "predicted salary : ", pred[0])  
+   model=joblib.load("salary_model.pk1")
+   pred = model.predict([[float(exp)]] )
+
+   return(pred[0])  
 
 
