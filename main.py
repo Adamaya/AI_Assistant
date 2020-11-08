@@ -379,7 +379,7 @@ while (True):
                         speak("failed to display cluster report due to following reason.")
                         print(status[1])
 
-            elif "a w s" in query:
+            elif "amazon" in query and "web" in query and "service" in query:
                 print("""
                 1. AWS Authentication
                 2. Create Key Pair
@@ -390,7 +390,7 @@ while (True):
                 7. Add S3
                 8. exit 
                 """)
-                speak("speak one of the following commands to execute the A W S operations")
+                speak("speak one of the following commands to execute the amazon web services operations")
                 while (True):
                     command = None
                     while command == None:
