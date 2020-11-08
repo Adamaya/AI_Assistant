@@ -297,7 +297,7 @@ while (True):
                                                            host)
                     speak("Configuring...")
                     speak("configured data node successfully")
-                    print(status[1])
+
 
                 elif "configure" in command and "data node" in command:
                     host = int(input('localhost(0)  remote(1): '))
