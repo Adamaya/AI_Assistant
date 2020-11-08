@@ -375,7 +375,7 @@ while (True):
                         speak("failed to display cluster report due to following reason.")
                         print(status[1])
             
-            elif "aws" in query:
+            elif "a w s" in query:
                 print("""
                 1. AWS Authentication
                 2. Create Key Pair
