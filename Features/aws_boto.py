@@ -43,9 +43,9 @@ def launch_ec2_instance(size, ami_id, key_name, security_grp, instance_type):
                 },
             },
         ],
-        ImageId=ami_id  #'ami-abc12345',
-        InstanceType=instance_type #'t2.micro',
-        KeyName= key_name  #'my-key-pair',
+        ImageId=ami_id,  #'ami-abc12345',
+        InstanceType=instance_type ,#'t2.micro',
+        KeyName= key_name,  #'my-key-pair',
         MaxCount=1,
         MinCount=1,
         SecurityGroupIds=[
