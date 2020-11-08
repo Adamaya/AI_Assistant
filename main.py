@@ -4,9 +4,9 @@ import Features.Docker_operations as docker
 from voice.voice_configuration import speak
 import Features.lvm as lvm
 import Features.hadoop as hadoop
-import Features.awscli as aws
+#import Features.awscli as aws
 import Features.ML_Features.salary_estimator as sal
-
+import Features.aws_boto as aws
 
 def select_in_between_user_login_and_create_profile():
     """
@@ -31,7 +31,9 @@ except Exception as e:
     exit()
 
 while (True):
-    print("__Welcome to AI Console__ \n\nUser Login(1)\t\tCreate New Profile(2)")
+    print("""
+    __Welcome to AI Console__ \n\nUser Login(1)\t\tCreate New Profile(2)
+    """)
     user_option = select_in_between_user_login_and_create_profile()
     if user_option == 1:
         print("-----User Login----- ")
@@ -394,20 +396,7 @@ while (True):
                     while command == None:
                         command = ai.takeCommand()
                     command = command.lower()
-
-                    if "authentication" in command:
-                        access_key = input("Enter access key : ")
-                        secret_key = input("Enter secret key : ")
-                        region = input("Enter region : ")
-                        status = aws.aws_authentication(access_key, secret_key, region)
-                        if status == 0:
-                            speak("Authentication successful")
-                            print(status[1])
-                        else:
-                            speak("authentication failed")
-                            print(status[1])
-
-                    elif "key" in command:
+                    if "key" in command:
                         key_name = input("Enter a key name : ")
                         status = aws.create_key_pair(key_name)
                         #if status[0] == 0:
@@ -421,7 +410,6 @@ while (True):
                         size = input("Enter size : ")
                         key_name = input("Enter the key name to use : ")
                         security_grp_name = input("Enter the Security Group name to use : ")
-<<<<<<< HEAD
                         status = aws.launch_ec2_instance(size,"ami-0e306788ff2473ccb",key_name,security_grp_name,"t2.micro")
                         #if status[0] == 0:
                         speak("The EC2 instance has been launched successfully")
@@ -439,7 +427,6 @@ while (True):
                         speak("The Security Group has been created successfully")
                         print(status)
                         """
-=======
                         status = aws.launch_ec2_instance("ami-0e306788ff2473ccb", key_name, security_grp_name,
                                                          "t2.micro")
                         if status[0] == 0:
@@ -456,7 +443,6 @@ while (True):
                         if status[0] == 0:
                             speak("The Security Group has been created successfully")
                             print(status[1])
->>>>>>> 8d62de7985887513fb9f5e9230c6b2f68fe48f23
                         else:
                             speak("Failed to create The Security Group")
                             print(status[1])"""
@@ -464,7 +450,6 @@ while (True):
                     elif "create" in command and "volume" in command:
                         AZ = input("Enter the Availability Zone : ")
                         size = input("Enter the size of the volume : ")
-<<<<<<< HEAD
                         status = aws.create_volume(AZ,size,"gp2")
                         #if status[0] == 0:
                         speak("The volume has been created successfully")
@@ -497,41 +482,14 @@ while (True):
                         else:
                             speak("Failed to add s3")
                             print(status[1])"""
-=======
-                        status = aws.create_volume(AZ, size, "gp2")
-                        if status[0] == 0:
-                            speak("The volume has been created successfully")
-                            print(status[1])
-                        else:
-                            speak("Failed to create volume")
-                            print(status[1])
 
-                    elif "attach" in command and "volume" in command:
-                        instance_id = input("Enter the instance id to attach with : ")
-                        volume_id = input("Enter the volume id : ")
-                        status = aws.attach_volume(instance_id, volume_id)
-                        if status[0] == 0:
-                            speak("The volume has been attached successfully to the instance")
-                            print(status[1])
-                        else:
-                            speak("Failed to attach volume")
-                            print(status[1])
 
-                    elif "add" in command or "s3" in command:
-                        bucket_name = input("Enter a bucket name : ")
-                        region = input("Enter the region : ")
-                        status = aws.s3_addition(bucket_name, region)
-                        if status[0] == 0:
-                            speak("The s3 has been added successfully")
-                            print(status[1])
-                        else:
-                            speak("Failed to add s3")
-                            print(status[1])
+
             elif "prediction" in query:
                 print("""
-                1. Salary Prediction
+                 Salary Prediction
                 """)
-                speak("choose one of the above options to perform the prediction operations")
+                speak("enter the years of experience to perform the salary prediction")
                 #
                 # command = None
                 # while command == None:
@@ -539,11 +497,11 @@ while (True):
                 # command = command.lower()
                 if  "prediction" in query:
                     exp = input("Enter the experience in years: ")
+                    speak("here is the value of predicted salary")
                     print("Predicted Salary: ", sal.sal_est(exp))
                 elif "exit" in query:
                     speak("returning to main menu")
                     break
->>>>>>> 8d62de7985887513fb9f5e9230c6b2f68fe48f23
 
     if user_option == 2:
         print("-----Configure and create your AI profile-----")
