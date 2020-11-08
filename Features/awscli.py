@@ -22,7 +22,7 @@ def create_key_pair(key_name):
     """
     creating a new key pair
     """
-    output = os.system("aws ec2 create-key-pair --key-name {}".format(key_name))
+    output = subprocess.getstatusoutput("aws ec2 create-key-pair --key-name {}".format(key_name))
     return output
 
 
