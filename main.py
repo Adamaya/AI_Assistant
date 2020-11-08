@@ -62,7 +62,7 @@ while (True):
                 ai.wikipedia_search(query, 2)
 
             elif "exit" in query:
-                ai.speak("Have a good day!")
+                speak("Have a good day!")
                 exit()
 
             elif "open" in query and ".com" in query:
@@ -397,7 +397,7 @@ while (True):
                     secret_key = input("Enter secret key : ")
                     region = input("Enter region : ")
                     status = aws.aws_authentication(access_key,secret_key,region)
-                    if status[0][0] == 0 and status[1][0] == 0 and status[2][0] == 0:
+                    if status == 0:
                         speak("Authentication successful")
                         print(status[1])
                     else:
