@@ -296,11 +296,8 @@ while (True):
                     status = hadoop.namenode_configuration(namenode_ip, namenode_dir_name, namenode_password
                                                            host)
                     speak("Configuring...")
-                    if status[0] == 0:
-                        speak("configured data node successfully")
-                        print(status[1])
-                    else:
-                        speak("failed to configure name node due to following reason.")
+                    speak("configured data node successfully")
+                    print(status[1])
 
                 elif "configure" in command and "data node" in command:
                     host = int(input('localhost(0)  remote(1): '))
