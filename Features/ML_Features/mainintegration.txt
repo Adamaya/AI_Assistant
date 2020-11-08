@@ -15,4 +15,6 @@ elif "prediction" in query:
     if "salary" in command and "prediction" in command :
         exp = input ("Enter the experience in years: ")
         print("Predicted Salary: " , sal.sal_est(exp))
-        
+    elif "exit" in command:
+        speak("returning to main menu")
+        break
