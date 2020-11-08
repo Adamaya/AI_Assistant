@@ -12,7 +12,10 @@ def aws_authentication(access_key, secret_key, region):
     out1 = os.system("aws configure set aws_access_key_id {}".format(access_key))
     out2 = os.system("aws configure set aws_secret_access_key {}".format(secret_key))
     out3 = os.system("aws configure set default.region {}".format(region))
-    return (out1,out2,out3)
+    if out1[0] == 0 and out2[0] == 0 and out3[0] == 0:
+        return 0
+    else:
+        return 1
 
 
 def create_key_pair(key_name):
