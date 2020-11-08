@@ -477,15 +477,15 @@ while (True):
                 1. Salary Prediction
                 """)
                 speak("choose one of the above options to perform the prediction operations")
-
-                command = None
-                while command == None:
-                    command = ai.takeCommand()
-                command = command.lower()
-                if "salary" in command and "prediction" in command:
+                #
+                # command = None
+                # while command == None:
+                #     command = ai.takeCommand()
+                # command = command.lower()
+                if  "prediction" in query:
                     exp = input("Enter the experience in years: ")
                     print("Predicted Salary: ", sal.sal_est(exp))
-                elif "exit" in command:
+                elif "exit" in query:
                     speak("returning to main menu")
                     break
 
