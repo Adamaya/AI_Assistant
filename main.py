@@ -58,6 +58,7 @@ while (True):
         while (True):
             os.system("tput setaf 6")
             print("### Here are the features of the ASHA Assistent ###\n")
+            speak("Here are the features of the Asha Assistent")
             os.system("tput setaf 7")
             print("1. create partitions")
             print("2. configure hadoop cluster")
