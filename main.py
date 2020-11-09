@@ -35,7 +35,7 @@ except Exception as e:
 while (True):
     os.system("tput setaf 3")
     print("""
-    __Welcome to AI Console__ \n\nUser Login(1)\t\tCreate New Profile(2)
+                    __Welcome to AI Console__ \n\nUser Login(1)\t\tCreate New Profile(2)
     """)
     os.system("tput setaf 10")
     user_option = select_in_between_user_login_and_create_profile()
@@ -48,6 +48,7 @@ while (True):
             verified = profile_manager.authentication(username, password)
             if verified:
                 # TODO create my_sql database for profile data
+                os.system("tput setaf 6")
                 print("Welcome")
                 break
             else:
@@ -55,8 +56,9 @@ while (True):
                 continue
         ai = Ai_Features()
         while (True):
-            os.system
+            os.system("tput setaf 6")
             print("### Here are the features of the ASHA Assistent ###\n")
+            os.system("tput setaf 7")
             print("1. create partitions")
             print("2. configure hadoop cluster")
             print("3. docker operations")
@@ -66,6 +68,7 @@ while (True):
 
             query = None
             while (query == None):
+                os.system("tput setaf 10")
                 query = ai.takeCommand()
             query = query.lower()
             if 'wikipedia' in query:
@@ -88,17 +91,23 @@ while (True):
                 ai.google_search(query)
 
             elif "docker" in query:
+                os.system("tput setaf 6")
+
                 print("""
+                            Docker Function
+                ###################################
                 1. Check available images
                 2. Launch a Container
                 3. stop a running container
                 4. Relaunch a Stopped container
                 5. Show corrently Running Container
                 6. Delete all containers
+                ###################################
                 """)
                 speak("speak one of the following commands to execute the docker operations")
 
                 while(True):
+                    os.system("tput setaf 10")
                     command = None
                     while command == None:
                         command = ai.takeCommand()
@@ -161,8 +170,15 @@ while (True):
                             print("failed to delete the containers")
                             print(status[1])
 
+                    elif "exit" in command:
+                        speak("returning to main menu")
+                        break
+
             elif "partition" in query:
+                os.system("tput setaf 6")
                 print("""
+                        Linux Partitions
+                #################################
                 1. Show Available Partitions
                 2. Create Physical Volume
                 3. Display Physical Volume
@@ -171,10 +187,12 @@ while (True):
                 6. Create Logical Volume
                 7. Format Logical Volume
                 8. Mount the LV
-                9. Extend the LV                              
+                9. Extend the LV                 
+                #################################             
                 """)
                 speak("speak one of the following commands for partition operations")
                 while (True):
+                    os.system("tput setaf 10")
                     command = None
                     while command == None:
                         command = ai.takeCommand()
@@ -279,8 +297,15 @@ while (True):
                             speak("failed to unmount logical volume due to following reason")
                             print(status[1])
 
+                    elif "exit" in command:
+                        speak("returning to main menu")
+                        break
+
             elif "hadoop" in query:
+                os.system("tput setaf 6")
                 print("""
+                        Hadoop
+                ##########################
                 1. Configure Namenode
                 2. Configure Datanode
                 3. Start Namenode
@@ -288,10 +313,12 @@ while (True):
                 5. Start Datanode
                 6. Stop Datanode
                 7. Cluster Report
+                ##########################
                 """)
                 speak("speak one of the following commands to execute the hadoop operations")
 
                 while (True):
+                    os.system("tput setaf 10")
                     command = None
                     while command == None:
                         command = ai.takeCommand()
@@ -378,9 +405,16 @@ while (True):
                         else:
                             speak("failed to display cluster report due to following reason.")
 
+                    elif "exit" in command:
+                        speak("returning to main menu")
+                        break
+
 
             elif "amazon" in query and "web" in query and "service" in query:
+                os.system("tput setaf 6")
                 print("""
+                            AWS 
+                #############################
                 1. AWS Authentication
                 2. Create Key Pair
                 3. Launch EC2 Instance
@@ -389,6 +423,7 @@ while (True):
                 6. Attach Volume
                 7. Add S3
                 8. exit 
+                #############################
                 """)
                 speak("speak one of the following commands to execute the amazon web services operations")
                 while (True):
@@ -484,12 +519,18 @@ while (True):
                             speak("Failed to add s3")
                             print(status[1])"""
 
+                    elif "exit" in command:
+                        speak("returning to main menu")
+                        break
+
 
 
             elif "prediction" in query:
+                os.system("tput setaf 6")
                 print("""
                  Salary Prediction
                 """)
+                os.system("tput setaf 10")
                 speak("enter the years of experience to perform the salary prediction")
                 #
                 # command = None
