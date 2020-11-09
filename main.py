@@ -33,11 +33,11 @@ except Exception as e:
     exit()
 
 while (True):
-    os.system("tput setaf -3")
+    os.system("tput setaf 3")
     print("""
     __Welcome to AI Console__ \n\nUser Login(1)\t\tCreate New Profile(2)
     """)
-    os.system("tput setaf -10")
+    os.system("tput setaf 10")
     user_option = select_in_between_user_login_and_create_profile()
     if user_option == 1:
         print("-----User Login----- ")
