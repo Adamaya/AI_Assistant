@@ -198,107 +198,136 @@ while (True):
                     while command == None:
                         command = ai.takeCommand()
                     command = command.lower()
-                    if "available partitions" in command:
+                    if "available" in command and "partition" in command:
                         status = lvm.attached_drive_report()
                         if status[0] == 0:
                             print("here are the available drives")
+                            os.system("tput setaf 3")
                             print(status[1])
                     elif "create" in command and "physical" in command:
+                        os.system("tput setaf 10")
                         drivepath = input("enter the drive path")
                         print("creating")
                         status = lvm.create_physical_volume(drivepath)
                         if status[0] == 0:
                             speak("pv created")
+                            os.system("tput setaf 3")
                             print(status[1])
                         else:
+                            os.system("tput setaf 1")
                             print(status[1])
 
-                    elif "physical" in command and "volume" in command and "show" in command:
+                    elif "physical" in command and "volume" in command and "display" in command:
+                        os.system("tput setaf 10")
                         status = lvm.display_physical_volume()
                         if status[0] == 0:
                             speak("here are the list of physical volumes")
+                            os.system("tput setaf 3")
                             print(status[1])
                         else:
                             speak("failed to display physical volume due to following error")
+                            os.system("tput setaf 1")
                             print(status[1])
 
                     elif "create" in command and "volume" in command and "group" in command:
+                        os.system("tput setaf 10")
                         vgname = input("Enter the Volume group name: ")
                         drives = input("Enter the drive paths")
                         status = lvm.create_volume_group(vgname, drives)
                         speak("Creating volume group")
                         if status[0] == 0:
                             speak("volume group created successfully successfuly")
+                            os.system("tput setaf 3")
                             print(status[1])
                         else:
                             speak("failed to create volume group due to following error")
+                            os.system("tput setaf 1")
                             print(status[1])
 
                     elif "group" in command and "volume" in command and "show" in command:
+                        os.system("tput setaf 10")
                         status = lvm.display_volume_group()
                         if status[0] == 0:
                             speak("here are the available volume groups")
+                            os.system("tput setaf 3")
                             print(status[1])
                         else:
                             speak("failed to show available volume group due to following error")
+                            os.system("tput setaf 1")
                             print(status[1])
 
                     elif "create" in command and "logical" in command and "volume" in command:
+                        os.system("tput setaf 10")
                         vgname = input("Enter the volume group name: ")
                         lvname = input("Enter the logical volume name: ")
                         size = input("Enter the size in of new partition in GB: ")
                         status = lvm.create_logical_volume(vgname, lvname, size)
                         if status[0] == 0:
                             speak("logical volume has been created successfully")
+                            os.system("tput setaf 3")
                             print(status[1])
                         else:
                             speak("failed to create logical volume due to following reason")
+                            os.system("tput setaf 1")
                             print(status[1])
 
                     elif "format" in command and "logical" in command and "volume" in command:
+                        os.system("tput setaf 10")
                         lvpath = input("Enter the logical volume group name: ")
                         status = lvm.format_logical_volume(lvpath)
                         if status[0] == 0:
                             speak("logical volume has been mounted successfully")
+                            os.system("tput setaf 3")
                             print(status[1])
                         else:
                             speak("failed to format logical volume due to following reason")
+                            os.system("tput setaf 1")
                             print(status[1])
 
                     elif "mount" in command and "logical" in command and "volume" in command:
+                        os.system("tput setaf 10")
                         lvpath = input("Enter the logical volume group name: ")
                         mountDirPath = input("Enter the path of mounted directory: ")
                         status = lvm.mount_logical_volume(mountDirPath, lvpath)
                         if status[0] == 0:
+                            os.system("tput setaf 3")
                             speak("logical volume has been mounted successfully")
                             print(status[1])
                         else:
+                            os.system("tput setaf 1")
                             speak("failed to mount logical volume due to following reason")
                             print(status[1])
 
                     elif "extend" in command and "logical" in command and "volume" in command:
+                        os.system("tput setaf 10")
                         vgname = input("Enter the volume group name: ")
                         lvname = input("Enter the logical volume name: ")
                         size = input("Enter the size in of new partition in GB: ")
                         status = lvm.extend_logical_volume(vgname, lvname, size)
                         if status[0] == 0:
+                            os.system("tput setaf 3")
                             speak("logical volume has been extended successfully")
                             print(status[1])
                         else:
+                            os.system("tput setaf 1")
                             speak("failed to extend logical volume due to following reason")
                             print(status[1])
 
                     elif "unmount" in command and ("logical" in command or "volume" in command):
+                        os.system("tput setaf 10")
                         mountDirPath = input("Enter the enter the path of mounted directory: ")
                         status = lvm.umount_logical_volume(mountDirPath)
                         if status[0] == 0:
+                            os.system("tput setaf 3")
                             speak("logical volume has been unmounted successfully")
                             print(status[1])
                         else:
+                            os.system("tput setaf 1")
                             speak("failed to unmount logical volume due to following reason")
                             print(status[1])
 
                     elif "exit" in command:
+                        os.system("tput setaf 10")
                         speak("returning to main menu")
                         break
 
@@ -325,6 +354,7 @@ while (True):
                         command = ai.takeCommand()
                     command = command.lower()
                     if "configure" in command and ("name node" in command or "namenode" in command):
+                        os.system("tput setaf 10")
                         host = int(input('localhost(0)  remote(1): '))
                         namenode_ip = input("enter the name node ip: ")
                         namenode_dir_name = input("enter the name node directory name:")
@@ -332,6 +362,7 @@ while (True):
                         status = hadoop.namenode_configuration(namenode_ip, namenode_dir_name, namenode_password,
                                                                host)
                         speak("Configuring...")
+                        os.system("tput setaf 3")
                         speak("configured data node successfully")
 
 
@@ -344,14 +375,12 @@ while (True):
                         status = hadoop.datanode_configuration(namenode_ip, datanode_ip, datanode_dir_name,
                                                                datanode_password, host)
                         speak("Configuring...")
-                        if status[0] == 0:
-                            speak("configured data node successfully")
-                            print(status[1])
-                        else:
-                            speak("failed to configure data node due to following reason.")
-                            print(status[1])
+                        os.system("tput setaf 3")
+                        speak("configured data node successfully")
+
 
                     elif "start" in command and "name node" in command:
+                        os.system("tput setaf 10")
                         host = int(input('localhost(0)  remote(1): '))
                         namenode_ip = input("enter the name node ip: ")
                         namenode_password = input("enter the name node ip password: ")
@@ -374,6 +403,7 @@ while (True):
                             print(status[1])
 
                     elif "start" in command and "data" in command and "node" in command:
+                        os.system("tput setaf 10")
                         host = int(input('localhost(0)  remote(1): '))
                         datanode_ip = input("enter the data node ip: ")
                         datanode_password = input("enter the data node ip password: ")
@@ -428,6 +458,7 @@ while (True):
                 """)
                 speak("speak one of the following commands to execute the amazon web services operations")
                 while (True):
+                    os.system("tput setaf 10")
                     command = None
                     while command == None:
                         command = ai.takeCommand()
@@ -437,6 +468,7 @@ while (True):
                         status = aws.create_key_pair(key_name)
                         # if status[0] == 0:
                         speak("Key Pair Created")
+                        os.system("tput setaf 3")
                         print(status)
                         # else:
                         #    speak("Failed to create a Key Pair")
@@ -450,6 +482,7 @@ while (True):
                                                          "t2.micro")
                         # if status[0] == 0:
                         speak("The EC2 instance has been launched successfully")
+                        os.system("tput setaf 3")
                         print(status)
                         """
                         else:
@@ -462,6 +495,7 @@ while (True):
                         status = aws.create_security_group(security_grp_name, description)
                         # if status[0] == 0:
                         speak("The Security Group has been created successfully")
+                        os.system("tput setaf 3")
                         print(status)
                         """
                         status = aws.launch_ec2_instance("ami-0e306788ff2473ccb", key_name, security_grp_name,
@@ -502,6 +536,7 @@ while (True):
                         status = aws.attach_volume(instance_id, volume_id)
                         # if status[0] == 0:
                         speak("The volume has been attached successfully to the instance")
+                        os.system("tput setaf 3")
                         print(status)
                         """
                         else:
@@ -514,6 +549,7 @@ while (True):
                         status = aws.s3_addition(bucket_name, region)
                         # if status[0] == 0:
                         speak("The s3 has been added successfully")
+                        os.system("tput setaf 3")
                         print(status)
                         """
                         else:
@@ -541,8 +577,10 @@ while (True):
                 if "prediction" in query:
                     exp = input("Enter the experience in years: ")
                     speak("here is the value of predicted salary")
+                    os.system("tput setaf 10")
                     print("Predicted Salary: ", sal.sal_est(exp))
                 elif "exit" in query:
+                    os.system("tput setaf 10")
                     speak("returning to main menu")
                     break
 
