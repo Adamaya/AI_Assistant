@@ -4,9 +4,11 @@ import Features.Docker_operations as docker
 from voice.voice_configuration import speak
 import Features.lvm as lvm
 import Features.hadoop as hadoop
-#import Features.awscli as aws
+# import Features.awscli as aws
 import Features.ML_Features.salary_estimator as sal
 import Features.aws_boto as aws
+import os
+
 
 def select_in_between_user_login_and_create_profile():
     """
@@ -31,9 +33,11 @@ except Exception as e:
     exit()
 
 while (True):
+    os.system("tput setaf -3")
     print("""
     __Welcome to AI Console__ \n\nUser Login(1)\t\tCreate New Profile(2)
     """)
+    os.system("tput setaf -10")
     user_option = select_in_between_user_login_and_create_profile()
     if user_option == 1:
         print("-----User Login----- ")
@@ -51,12 +55,14 @@ while (True):
                 continue
         ai = Ai_Features()
         while (True):
-            print("Here are the features of the Saha Assistent")
-            print("1. create patitions")
+            os.system
+            print("### Here are the features of the ASHA Assistent ###\n")
+            print("1. create partitions")
             print("2. configure hadoop cluster")
             print("3. docker operations")
-            print("4. Aws commands")
-            print("5. Salery predictor using Linear Resgression")
+            print("4. Salery predictor using Linear Resgression")
+            print("5. Aws commands")
+
 
             query = None
             while (query == None):
@@ -92,67 +98,68 @@ while (True):
                 """)
                 speak("speak one of the following commands to execute the docker operations")
 
-                command = None
-                while command == None:
-                    command = ai.takeCommand()
-                command = command.lower()
-                if "check" in command and "available" in command and "images" in command:
-                    status = docker.check_available_images()
-                    if status[0] == 0:
-                        speak("here are the available images")
-                        print(status[1])
-                elif "launch" in command and "container" in command:
-                    osname = input("Enter the Container name for your OS: ")
-                    image_name = input("Enter the OS image you want to use: ")
-                    print("launching")
-                    status = docker.launch_container(osname, image_name)
-                    if status[0] == 0:
-                        print("container launched successfuly")
-                        print(status[1])
-                    else:
-                        print("failed to launch the container")
-                        print(status[1])
+                while(True):
+                    command = None
+                    while command == None:
+                        command = ai.takeCommand()
+                    command = command.lower()
+                    if "check" in command and "available" in command and "images" in command:
+                        status = docker.check_available_images()
+                        if status[0] == 0:
+                            speak("here are the available images")
+                            print(status[1])
+                    elif "launch" in command and "container" in command:
+                        osname = input("Enter the Container name for your OS: ")
+                        image_name = input("Enter the OS image you want to use: ")
+                        print("launching")
+                        status = docker.launch_container(osname, image_name)
+                        if status[0] == 0:
+                            print("container launched successfuly")
+                            print(status[1])
+                        else:
+                            print("failed to launch the container")
+                            print(status[1])
 
-                elif "stop" in command and "running" in command and "container" in command:
-                    osname = input("Enter the Container name for your OS: ")
-                    status = docker.stop_running_container(osname)
-                    print("Stopping the container")
-                    if status[0] == 0:
-                        print("container has been stopped successfuly")
-                        print(status[1])
-                    else:
-                        print("failed to stop the container")
-                        print(status[1])
+                    elif "stop" in command and "running" in command and "container" in command:
+                        osname = input("Enter the Container name for your OS: ")
+                        status = docker.stop_running_container(osname)
+                        print("Stopping the container")
+                        if status[0] == 0:
+                            print("container has been stopped successfuly")
+                            print(status[1])
+                        else:
+                            print("failed to stop the container")
+                            print(status[1])
 
-                elif "relaunch" in command and "stopped" in command and "container" in command:
-                    osname = input("Enter the Container name for your OS: ")
-                    status = docker.run_prelaunched_container(osname)
-                    print("Relaunching....")
-                    if status[0] == 0:
-                        print("container has been relaunched successfuly")
-                        print(status[1])
-                    else:
-                        print("failed to relaunch the container")
-                        print(status[1])
+                    elif "relaunch" in command and "stopped" in command and "container" in command:
+                        osname = input("Enter the Container name for your OS: ")
+                        status = docker.run_prelaunched_container(osname)
+                        print("Relaunching....")
+                        if status[0] == 0:
+                            print("container has been relaunched successfuly")
+                            print(status[1])
+                        else:
+                            print("failed to relaunch the container")
+                            print(status[1])
 
-                elif "show" in command and "running" in command and "container" in command:
-                    status = docker.show_currently_running_containers()
-                    if status[0] == 0:
-                        print("here are the running containers")
-                        print(status[1])
-                    else:
-                        print("docker internal error occered")
-                        print(status[1])
+                    elif "show" in command and "running" in command and "container" in command:
+                        status = docker.show_currently_running_containers()
+                        if status[0] == 0:
+                            print("here are the running containers")
+                            print(status[1])
+                        else:
+                            print("docker internal error occered")
+                            print(status[1])
 
                 # TODO notworking correctly with voice
-                elif "delete" in command and "all" in command and "container" in command:
-                    status = docker.delete_all_containers()
-                    if status[0] == 0:
-                        print("all containers has been deleted successfuly")
-                        print(status[1])
-                    else:
-                        print("failed to delete the containers")
-                        print(status[1])
+                    elif "delete" in command and "all" in command and "container" in command:
+                        status = docker.delete_all_containers()
+                        if status[0] == 0:
+                            print("all containers has been deleted successfuly")
+                            print(status[1])
+                        else:
+                            print("failed to delete the containers")
+                            print(status[1])
 
             elif "partition" in query:
                 print("""
@@ -167,110 +174,110 @@ while (True):
                 9. Extend the LV                              
                 """)
                 speak("speak one of the following commands for partition operations")
+                while (True):
+                    command = None
+                    while command == None:
+                        command = ai.takeCommand()
+                    command = command.lower()
+                    if "available partitions" in command:
+                        status = lvm.attached_drive_report()
+                        if status[0] == 0:
+                            print("here are the available drives")
+                            print(status[1])
+                    elif "create" in command and "physical" in command:
+                        drivepath = input("enter the drive path")
+                        print("creating")
+                        status = lvm.create_physical_volume(drivepath)
+                        if status[0] == 0:
+                            speak("pv created")
+                            print(status[1])
+                        else:
+                            print(status[1])
 
-                command = None
-                while command == None:
-                    command = ai.takeCommand()
-                command = command.lower()
-                if "available partitions" in command:
-                    status = lvm.attached_drive_report()
-                    if status[0] == 0:
-                        print("here are the available drives")
-                        print(status[1])
-                elif "create" in command and "physical" in command:
-                    drivepath = input("enter the drive path")
-                    print("creating")
-                    status = lvm.create_physical_volume(drivepath)
-                    if status[0] == 0:
-                        speak("pv created")
-                        print(status[1])
-                    else:
-                        print(status[1])
+                    elif "physical" in command and "volume" in command and "show" in command:
+                        status = lvm.display_physical_volume()
+                        if status[0] == 0:
+                            speak("here are the list of physical volumes")
+                            print(status[1])
+                        else:
+                            speak("failed to display physical volume due to following error")
+                            print(status[1])
 
-                elif "physical" in command and "volume" in command and "show" in command:
-                    status = lvm.display_physical_volume()
-                    if status[0] == 0:
-                        speak("here are the list of physical volumes")
-                        print(status[1])
-                    else:
-                        speak("failed to display physical volume due to following error")
-                        print(status[1])
+                    elif "create" in command and "volume" in command and "group" in command:
+                        vgname = input("Enter the Volume group name: ")
+                        drives = input("Enter the drive paths")
+                        status = lvm.create_volume_group(vgname, drives)
+                        speak("Creating volume group")
+                        if status[0] == 0:
+                            speak("volume group created successfully successfuly")
+                            print(status[1])
+                        else:
+                            speak("failed to create volume group due to following error")
+                            print(status[1])
 
-                elif "create" in command and "volume" in command and "group" in command:
-                    vgname = input("Enter the Volume group name: ")
-                    drives = input("Enter the drive paths")
-                    status = lvm.create_volume_group(vgname, drives)
-                    speak("Creating volume group")
-                    if status[0] == 0:
-                        speak("volume group created successfully successfuly")
-                        print(status[1])
-                    else:
-                        speak("failed to create volume group due to following error")
-                        print(status[1])
+                    elif "group" in command and "volume" in command and "show" in command:
+                        status = lvm.display_volume_group()
+                        if status[0] == 0:
+                            speak("here are the available volume groups")
+                            print(status[1])
+                        else:
+                            speak("failed to show available volume group due to following error")
+                            print(status[1])
 
-                elif "group" in command and "volume" in command and "show" in command:
-                    status = lvm.display_volume_group()
-                    if status[0] == 0:
-                        speak("here are the available volume groups")
-                        print(status[1])
-                    else:
-                        speak("failed to show available volume group due to following error")
-                        print(status[1])
+                    elif "create" in command and "logical" in command and "volume" in command:
+                        vgname = input("Enter the volume group name: ")
+                        lvname = input("Enter the logical volume name: ")
+                        size = input("Enter the size in of new partition in GB: ")
+                        status = lvm.create_logical_volume(vgname, lvname, size)
+                        if status[0] == 0:
+                            speak("logical volume has been created successfully")
+                            print(status[1])
+                        else:
+                            speak("failed to create logical volume due to following reason")
+                            print(status[1])
 
-                elif "create" in command and "logical" in command and "volume" in command:
-                    vgname = input("Enter the volume group name: ")
-                    lvname = input("Enter the logical volume name: ")
-                    size = input("Enter the size in of new partition in GB: ")
-                    status = lvm.create_logical_volume(vgname, lvname, size)
-                    if status[0] == 0:
-                        speak("logical volume has been created successfully")
-                        print(status[1])
-                    else:
-                        speak("failed to create logical volume due to following reason")
-                        print(status[1])
+                    elif "format" in command and "logical" in command and "volume" in command:
+                        lvpath = input("Enter the logical volume group name: ")
+                        status = lvm.format_logical_volume(lvpath)
+                        if status[0] == 0:
+                            speak("logical volume has been mounted successfully")
+                            print(status[1])
+                        else:
+                            speak("failed to format logical volume due to following reason")
+                            print(status[1])
 
-                elif "format" in command and "logical" in command and "volume" in command:
-                    lvpath = input("Enter the logical volume group name: ")
-                    status = lvm.format_logical_volume(lvpath)
-                    if status[0] == 0:
-                        speak("logical volume has been mounted successfully")
-                        print(status[1])
-                    else:
-                        speak("failed to format logical volume due to following reason")
-                        print(status[1])
+                    elif "mount" in command and "logical" in command and "volume" in command:
+                        lvpath = input("Enter the logical volume group name: ")
+                        mountDirPath = input("Enter the path of mounted directory: ")
+                        status = lvm.mount_logical_volume(mountDirPath, lvpath)
+                        if status[0] == 0:
+                            speak("logical volume has been mounted successfully")
+                            print(status[1])
+                        else:
+                            speak("failed to mount logical volume due to following reason")
+                            print(status[1])
 
-                elif "mount" in command and "logical" in command and "volume" in command:
-                    lvpath = input("Enter the logical volume group name: ")
-                    mountDirPath = input("Enter the path of mounted directory: ")
-                    status = lvm.mount_logical_volume(mountDirPath, lvpath)
-                    if status[0] == 0:
-                        speak("logical volume has been mounted successfully")
-                        print(status[1])
-                    else:
-                        speak("failed to mount logical volume due to following reason")
-                        print(status[1])
+                    elif "extend" in command and "logical" in command and "volume" in command:
+                        vgname = input("Enter the volume group name: ")
+                        lvname = input("Enter the logical volume name: ")
+                        size = input("Enter the size in of new partition in GB: ")
+                        status = lvm.extend_logical_volume(vgname, lvname, size)
+                        if status[0] == 0:
+                            speak("logical volume has been extended successfully")
+                            print(status[1])
+                        else:
+                            speak("failed to extend logical volume due to following reason")
+                            print(status[1])
 
-                elif "extend" in command and "logical" in command and "volume" in command:
-                    vgname = input("Enter the volume group name: ")
-                    lvname = input("Enter the logical volume name: ")
-                    size = input("Enter the size in of new partition in GB: ")
-                    status = lvm.extend_logical_volume(vgname, lvname, size)
-                    if status[0] == 0:
-                        speak("logical volume has been extended successfully")
-                        print(status[1])
-                    else:
-                        speak("failed to extend logical volume due to following reason")
-                        print(status[1])
-
-                elif "unmount" in command and ("logical" in command or "volume" in command):
-                    mountDirPath = input("Enter the enter the path of mounted directory: ")
-                    status = lvm.umount_logical_volume(mountDirPath)
-                    if status[0] == 0:
-                        speak("logical volume has been unmounted successfully")
-                        print(status[1])
-                    else:
-                        speak("failed to unmount logical volume due to following reason")
-                        print(status[1])
+                    elif "unmount" in command and ("logical" in command or "volume" in command):
+                        mountDirPath = input("Enter the enter the path of mounted directory: ")
+                        status = lvm.umount_logical_volume(mountDirPath)
+                        if status[0] == 0:
+                            speak("logical volume has been unmounted successfully")
+                            print(status[1])
+                        else:
+                            speak("failed to unmount logical volume due to following reason")
+                            print(status[1])
 
             elif "hadoop" in query:
                 print("""
@@ -284,7 +291,7 @@ while (True):
                 """)
                 speak("speak one of the following commands to execute the hadoop operations")
 
-                while(True):
+                while (True):
                     command = None
                     while command == None:
                         command = ai.takeCommand()
@@ -295,7 +302,7 @@ while (True):
                         namenode_dir_name = input("enter the name node directory name:")
                         namenode_password = input("enter the name node password: ")
                         status = hadoop.namenode_configuration(namenode_ip, namenode_dir_name, namenode_password,
-                                                           host)
+                                                               host)
                         speak("Configuring...")
                         speak("configured data node successfully")
 
@@ -307,7 +314,7 @@ while (True):
                         datanode_dir_name = input("enter the data node directory name: ")
                         datanode_password = input("enter the data node password: ")
                         status = hadoop.datanode_configuration(namenode_ip, datanode_ip, datanode_dir_name,
-                                                           datanode_password, host)
+                                                               datanode_password, host)
                         speak("Configuring...")
                         if status[0] == 0:
                             speak("configured data node successfully")
@@ -350,7 +357,7 @@ while (True):
                             speak("failed to start the data node due to following reason.")
 
 
-                    elif "stop" in command and "data" in command and "node" in command:
+                    elif "stop" in command and "name" in command and "node" in command:
                         host = int(input('localhost(0)  remote(1): '))
                         datanode_ip = input("enter the data node ip: ")
                         datanode_password = input("enter the data node ip password: ")
@@ -392,10 +399,10 @@ while (True):
                     if "key" in command:
                         key_name = input("Enter a key name : ")
                         status = aws.create_key_pair(key_name)
-                        #if status[0] == 0:
+                        # if status[0] == 0:
                         speak("Key Pair Created")
                         print(status)
-                        #else:
+                        # else:
                         #    speak("Failed to create a Key Pair")
                         #    print(status[1])
 
@@ -403,20 +410,21 @@ while (True):
                         size = input("Enter size : ")
                         key_name = input("Enter the key name to use : ")
                         security_grp_name = input("Enter the Security Group name to use : ")
-                        status = aws.launch_ec2_instance(size,"ami-0e306788ff2473ccb",key_name,security_grp_name,"t2.micro")
-                        #if status[0] == 0:
+                        status = aws.launch_ec2_instance(size, "ami-0e306788ff2473ccb", key_name, security_grp_name,
+                                                         "t2.micro")
+                        # if status[0] == 0:
                         speak("The EC2 instance has been launched successfully")
                         print(status)
                         """
                         else:
                             speak("Failed to launch the ec2 instance")
                             print(status[1])"""
-                
+
                     elif "security" in command and "group" in command:
                         security_grp_name = input("Enter a Security Group name : ")
                         description = input("Put a description for the Security Group : ")
-                        status = aws.create_security_group(security_grp_name,description)
-                        #if status[0] == 0:
+                        status = aws.create_security_group(security_grp_name, description)
+                        # if status[0] == 0:
                         speak("The Security Group has been created successfully")
                         print(status)
                         """
@@ -443,32 +451,32 @@ while (True):
                     elif "create" in command and "volume" in command:
                         AZ = input("Enter the Availability Zone : ")
                         size = input("Enter the size of the volume : ")
-                        status = aws.create_volume(AZ,size,"gp2")
-                        #if status[0] == 0:
+                        status = aws.create_volume(AZ, size, "gp2")
+                        # if status[0] == 0:
                         speak("The volume has been created successfully")
                         print(status)
                         """
                         else:
                             speak("Failed to create volume")
                             print(status[1])"""
-                
+
                     elif "attach" in command and "volume" in command:
                         instance_id = input("Enter the instance id to attach with : ")
                         volume_id = input("Enter the volume id : ")
-                        status = aws.attach_volume(instance_id,volume_id)
-                        #if status[0] == 0:
+                        status = aws.attach_volume(instance_id, volume_id)
+                        # if status[0] == 0:
                         speak("The volume has been attached successfully to the instance")
                         print(status)
                         """
                         else:
                             speak("Failed to attach volume")
                             print(status[1])"""
-                
+
                     elif "add" in command or "s3" in command:
                         bucket_name = input("Enter a bucket name : ")
                         region = input("Enter the region : ")
-                        status = aws.s3_addition(bucket_name,region)
-                        #if status[0] == 0:
+                        status = aws.s3_addition(bucket_name, region)
+                        # if status[0] == 0:
                         speak("The s3 has been added successfully")
                         print(status)
                         """
@@ -488,7 +496,7 @@ while (True):
                 # while command == None:
                 #     command = ai.takeCommand()
                 # command = command.lower()
-                if  "prediction" in query:
+                if "prediction" in query:
                     exp = input("Enter the experience in years: ")
                     speak("here is the value of predicted salary")
                     print("Predicted Salary: ", sal.sal_est(exp))
