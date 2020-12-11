@@ -3,9 +3,10 @@ pip install speechRecognition
 pip install pywin32
 pip install mysql-connector-python
 
+
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio
 
-/how to search a query on google
+how to search a query on google
 google reminder
 search avideo on youtube
 join a meeting on google meets
